@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "groupware", "groupware\groupware.njsproj", "{45422ACD-1A91-4ACA-A857-5D2943CDF2CC}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "groupware", "groupware.njsproj", "{45422ACD-1A91-4ACA-A857-5D2943CDF2CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {72F10E9E-D92E-47E7-98C0-91B82576539A}
+		SolutionGuid = {764BD022-24FF-4F25-A598-3FA32FDEDD0F}
 	EndGlobalSection
 EndGlobal
