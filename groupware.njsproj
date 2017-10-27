@@ -36,6 +36,9 @@
     <Content Include="htmltemplates\reserved_template_page.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="htmltemplates\stylesheets\reserved.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="htmltemplates\templates\forms\template_1_1.png" />
     <Content Include="htmltemplates\templates\forms\template_1_2.png" />
     <Content Include="htmltemplates\templates\forms\template_1_3.png" />
@@ -71,6 +74,11 @@
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
     <Folder Include="views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="htmltemplates\javascripts\reserved_control.js">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
