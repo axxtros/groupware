@@ -35,6 +35,7 @@ time, mark, audio, video {
     --side-menu-item-hover-bk-color: #293140;
     --form-content-width: 750px;
     --form-content-bk-color: #e9f0fa;
+    --form-header-bk-color: #e0e8f7;
     --footer-height: 40px;
     --footer-base-bk-color: #293141;
     --footer-text-color: #9cabc4;
@@ -117,6 +118,26 @@ body {
     float: left;
     width: var(--form-content-width);
     background-color: var(--form-content-bk-color);
+}
+
+.form-wrapper {
+    
+}
+
+.form-header {
+    height: var(--side-menu-item-height);
+    background-color: var(--form-header-bk-color);
+}
+
+    .form-header p {
+        margin: auto;
+        margin-left: 0.5em;
+        padding-top: 0.8em;
+        font-weight: bold;
+    }
+
+.form-content {
+    padding: 0.5em;
 }
 
 .footer-base {
