@@ -22,17 +22,108 @@ time, mark, audio, video {
 }
 
 :root {
-    --body-width : 1000px;    
+    --body-width: 1000px;
+    --header-height: 60px;
+    --header-logo-bk-color: #15a4fa;
+    --header-menu-bk-color: #ffffff;
+    --main-menu-height: 40px;
+    --content-base-bk-color: #333c4e;
+    --side-menu-width: 250px;
+    --side-menu-item-height: 40px;
+    --side-menu-text-color: #9cabc4;
+    --side-menu-item-bottom-border-color: #3e4960;
+    --side-menu-item-hover-bk-color: #293140;
+    --form-content-width: 750px;
+    --form-content-bk-color: #e9f0fa;
+    --footer-height: 40px;
+    --footer-base-bk-color: #293141;
+    --footer-text-color: #9cabc4;
 }
 
 body {
     width: var(--body-width);
     margin: auto;
     font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
-    font-size: 14px;
+    font-size: 14px;    /*0.9em;*/
     font-style: normal;
     font-variant: normal;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 18px;
     background-color: white;
 }
+
+.header-base {
+    height: var(--header-height);
+}
+
+.header-logo {
+    display: block;
+    float: left;
+    width: var(--side-menu-width);
+    background-color: var(--header-logo-bk-color);
+    height: inherit;
+}
+
+.header-menu {
+    display: block;
+    float: left;
+    width: var(--form-content-width);
+    background-color: var(--header-menu-bk-color);
+    height: inherit;
+}
+
+.main-menu-base {
+    display: none;  /* because is not needed */
+    height: var(--main-menu-height);
+}
+
+.content-base {
+    display: block;
+    overflow: auto;
+    background-color: var(--content-base-bk-color);
+}
+
+.side-menu-base {
+    display: block;
+    float: left;
+    width: var(--side-menu-width);
+    background-color: none;    
+}
+
+.side-menu-item-anchor {
+    text-decoration: none !important;
+    color: var(--side-menu-text-color);
+}
+
+.side-menu-item-base {
+    display: block;
+    height: var(--side-menu-item-height);
+    border-bottom: 1px solid var(--side-menu-item-bottom-border-color);
+}
+
+    .side-menu-item-base:hover {
+        background-color: var(--side-menu-item-hover-bk-color);
+        color: #ffffff;
+    }
+
+.side-menu-item-anchor .side-menu-item-base p {
+    margin: auto;
+    margin-left: 1em;    
+    padding-top: 0.8em;
+}
+
+.form-content-base {
+    display: block;
+    float: left;
+    width: var(--form-content-width);
+    background-color: var(--form-content-bk-color);
+}
+
+.footer-base {
+    display: block;
+    clear: both;
+    height: var(--footer-height);
+    background-color: var(--footer-base-bk-color);
+    color: var(--footer-text-color);
+}
+
