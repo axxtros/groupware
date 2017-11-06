@@ -30,6 +30,8 @@ time, mark, audio, video {
     --header-menu-hover-text-color: #46526b;
     --main-menu-height: 30px;
     --main-menu-width: calc(var(--body-width) - var(--side-menu-width));
+    --main-menu-select-item-width: 220px;
+    --main-menu-select-item-element-width: calc(var(--main-menu-select-item-width) - 60);
     --content-base-bk-color: #333c4e;
     --side-menu-width: 250px;
     --side-menu-item-height: 40px;
@@ -193,6 +195,26 @@ body {
 .main-menu-logout-item-base {
     float: right;
 }
+
+.selected-item-base {
+    width: var(--main-menu-select-item-width);
+}
+
+    .selected-item-base p {
+        float: left;
+        color: var(--header-menu-text-color);
+        font-weight: bold;
+        margin-top: 0.5em;
+    }
+
+    .selected-item-base select {
+        float: left;
+        margin: 0.5em 0 0 0.5em;
+        width: var(--main-menu-select-item-element-width);
+        background-color: var(--header-menu-text-color);
+        color: var(--content-base-bk-color);
+        font-weight: bold;
+    }
 
 .content-base {
     display: block;
