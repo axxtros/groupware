@@ -26,14 +26,17 @@ time, mark, audio, video {
     --header-height: 60px;
     --header-logo-bk-color: #15a4fa;
     --header-menu-bk-color: #ffffff;
-    --main-menu-height: 40px;
+    --header-menu-text-color: #a7b7d0;
+    --header-menu-hover-text-color: #46526b;
+    --main-menu-height: 30px;
+    --main-menu-width: calc(var(--body-width) - var(--side-menu-width));
     --content-base-bk-color: #333c4e;
     --side-menu-width: 250px;
     --side-menu-item-height: 40px;
     --side-menu-text-color: #9cabc4;
     --side-menu-item-bottom-border-color: #3e4960;
     --side-menu-item-hover-bk-color: #293140;
-    --form-content-width: 750px;
+    --form-content-width: calc(var(--body-width) - var(--side-menu-width));
     --form-content-bk-color: #e9f0fa;
     --form-header-bk-color: #e0e8f7;
     --footer-height: 40px;
@@ -62,6 +65,10 @@ body {
     float: left;
     width: var(--side-menu-width);
     background-color: var(--header-logo-bk-color);
+    background-image: url(../images/groupware_logo.png);
+    background-size: 180px 50px;
+    background-position: center;
+    background-repeat: no-repeat;
     height: inherit;
 }
 
@@ -73,9 +80,118 @@ body {
     height: inherit;
 }
 
+.header-menu-item-anchor {
+    text-decoration: none !important;
+    color: var(--header-menu-text-color);
+}
+
+    .header-menu-item-anchor:hover {
+        color: var(--header-menu-hover-text-color);
+    }
+
+.header-menu-item-base {
+    display: block;
+    float: left;
+    width: 120px;
+    height: 30px;    
+    margin-top: 15px;
+    border-right: 1px solid var(--header-menu-text-color);
+}
+
+.header-menu-item-anchor {
+    display: block;    
+}
+
+.header-menu-item-anchor .header-menu-item-base p {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.header-menu-user-base {
+    display: block;
+    float: right;
+    width: 260px;
+    height: 30px;
+    margin-top: 5px;
+}
+
+.header-menu-user-name-base {
+    display: block;
+    float: left;
+    margin-top: 8px;
+    text-align: right;
+    width: 200px;
+}
+
+    .header-menu-user-name {
+        font-weight: bold;     
+    }
+
+    .header-menu-user-pos {
+        font-size: 0.8em;
+        color: #15a4fa;
+    }
+
+.header-menu-user-img-base {
+    display: block;
+    float: right;
+}
+
+    .header-menu-user-img-base img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
 .main-menu-base {
-    display: none;  /* because is not needed */
+    display: block;
+    width: 100%;
     height: var(--main-menu-height);
+    background-color: var(--content-base-bk-color);
+    /*border-bottom: 1px solid var(--side-menu-item-bottom-border-color);*/
+}
+
+.main-menu-side-border {
+    display: block;
+    float: left;
+    width: var(--side-menu-width);
+    height: var(--main-menu-height);
+    background-color: none;
+}
+
+.main-menu-menuitem-base {
+    display: block;
+    float: right;
+    width: var(--main-menu-width);
+    height: var(--main-menu-height);
+}
+
+.main-menu-item-anchor {
+    text-decoration: none !important;
+    color: var(--header-menu-text-color);
+}
+
+.main-menu-item-base {
+    display: block;
+    float: left;
+    width: 100px;
+    height: var(--main-menu-height);    
+}
+
+.main-menu-item-anchor .main-menu-item-base p {
+    padding-top: 0.5em;
+    font-weight: bold;    
+    text-align: center;
+}
+
+.main-menu-item-anchor:hover {
+    color: #ffffff;
+}
+
+.main-menu-logout-item-base {
+    float: right;
 }
 
 .content-base {
@@ -88,7 +204,8 @@ body {
     display: block;
     float: left;
     width: var(--side-menu-width);
-    background-color: none;    
+    background-color: none;
+    border-top: 1px solid var(--side-menu-item-bottom-border-color);
 }
 
 .side-menu-item-anchor {

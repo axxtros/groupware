@@ -33,6 +33,8 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="htmltemplates\images\user.jpg" />
+    <Content Include="htmltemplates\images\user_icon.svg" />
     <Content Include="htmltemplates\reserved_template_page.html">
       <SubType>Code</SubType>
     </Content>
@@ -43,6 +45,8 @@
     <Content Include="htmltemplates\templates\forms\template_1_2.png" />
     <Content Include="htmltemplates\templates\forms\template_1_3.png" />
     <Content Include="htmltemplates\templates\forms\template_2_1.png" />
+    <Content Include="htmltemplates\images\groupware_logo.png" />
+    <Content Include="imgs\logo_1.svg" />
     <Content Include="views\error.ejs">
       <SubType>Code</SubType>
     </Content>
@@ -66,6 +70,7 @@
     <Folder Include="htmltemplates\javascripts\" />
     <Folder Include="htmltemplates\images\" />
     <Folder Include="htmltemplates\templates\forms\" />
+    <Folder Include="imgs\" />
     <Folder Include="modules\" />
     <Folder Include="htmltemplates\" />
     <Folder Include="public\" />

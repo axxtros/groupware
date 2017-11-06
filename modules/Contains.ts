@@ -1,7 +1,7 @@
 ﻿
 export class Constains {
 
-    private _PROGRAM_TITLE = "Inside-Tracker";
+    private _PROGRAM_TITLE = "Groupware";
     private _PROGRAM_VERSION = "0.1";
     private _PROGRAM_BUILD_NUMBER = "0001";
 
