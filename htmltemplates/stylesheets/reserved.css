@@ -42,7 +42,7 @@ time, mark, audio, video {
     --form-content-bk-color: #e9f0fa;
     --form-header-bk-color: #e0e8f7;
     --footer-height: 40px;
-    --footer-base-bk-color: #293141;
+    --footer-base-bk-color: #333c4e; /*#293141;*/
     --footer-text-color: #9cabc4;
 }
 
@@ -116,7 +116,7 @@ body {
     float: right;
     width: 260px;
     height: 30px;
-    margin-top: 5px;
+    margin: 5px 0 0 10px;
 }
 
 .header-menu-user-name-base {
@@ -179,7 +179,8 @@ body {
     display: block;
     float: left;
     width: 100px;
-    height: var(--main-menu-height);    
+    height: var(--main-menu-height);
+    padding: 0 2em 0 2em;
 }
 
 .main-menu-item-anchor .main-menu-item-base p {
@@ -194,24 +195,23 @@ body {
 
 .main-menu-logout-item-base {
     float: right;
+    padding: 0;
 }
 
 .selected-item-base {
-    width: var(--main-menu-select-item-width);
-    padding-right: 20px;
+    width: var(--side-menu-width);
 }
 
     .selected-item-base p {
         float: left;
-        color: var(--header-menu-text-color);
-        font-weight: bold;
-        margin-top: 0.5em;
+        color: var(--header-menu-text-color);        
+        margin: 0.5em 0 0 1em;
     }
 
     .selected-item-base select {
         float: left;
         margin: 0.5em 0 0 0.5em;
-        width: 160px; /*var(--main-menu-select-item-element-width);*/
+        width: 175px;
         background-color: var(--header-menu-text-color);
         color: var(--content-base-bk-color);
         font-weight: bold;
@@ -285,6 +285,7 @@ body {
     clear: both;
     height: var(--footer-height);
     background-color: var(--footer-base-bk-color);
+    border-top: 1px solid var(--side-menu-item-bottom-border-color);
     color: var(--footer-text-color);
 }
 
