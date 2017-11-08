@@ -53,6 +53,10 @@
     <Content Include="htmltemplates\templates\forms\template_2_1.png" />
     <Content Include="htmltemplates\images\groupware_logo.png" />
     <Content Include="imgs\logo_1.svg" />
+    <Content Include="public\images\groupware_logo.png" />
+    <Content Include="public\images\user.jpg" />
+    <Content Include="public\stylesheets\login.css" />
+    <Content Include="public\stylesheets\reserved.css" />
     <Content Include="views\error.ejs">
       <SubType>Code</SubType>
     </Content>
@@ -64,7 +68,6 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="routes\index.ts" />
-    <TypeScriptCompile Include="routes\user.ts" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />

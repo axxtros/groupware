@@ -1,11 +1,13 @@
 ﻿import debug = require('debug');
 import express = require('express');
 import path = require('path');
+var parser = require('body-parser')
 
 import routes from './routes/index';
-import users from './routes/user';
 
 var app = express();
+app.use(parser.urlencoded({ extended: false }));
+app.use(parser.json());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -13,8 +15,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//http://tanmaysarkar.com/html-form-with-ejs-template-in-nodejs/
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,0 +1,81 @@
+﻿/* 07/11/2017 */
+
+/*
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+*/
+
+:root {
+    --body-width: 1000px;
+    --login-form-table-base-width: 400px;
+    --login-form-input-width: 99%;
+    --login-form-logo-height: 100px;
+}
+
+body {
+    width: var(--body-width);
+    margin: auto;
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 18px;
+    background-color: white;
+}
+
+.login-form-table-base {
+    margin: auto;
+    width: var(--login-form-table-base-width);
+    margin-top: 100px;
+}
+
+.login-form-table-logo-sc {
+    background-image: url(../images/groupware_logo.png);
+    background-size: 100% var(--login-form-logo-height);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: var(--login-form-logo-height);
+}
+
+.login-form-table-title-sc {
+    text-align: right;
+}
+
+.login-form-input-sc {
+    width: var(--login-form-input-width);
+}
+
+.login-form-table-msg-sc {    
+    text-align: center;
+    color: red;
+}
+
+.login-form-error-msg-sc {
+    display: none;
+    color: red;
+}
+
+.login-form-table-button-sc {
+    display: block;
+    width: 200px;
+    margin: auto;
+}
