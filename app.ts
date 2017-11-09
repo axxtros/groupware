@@ -1,6 +1,7 @@
 ﻿import debug = require('debug');
 import express = require('express');
 import path = require('path');
+import mongodb = require('mongodb');
 var parser = require('body-parser')
 
 import routes from './routes/index';

@@ -52,7 +52,6 @@
     <Content Include="htmltemplates\templates\forms\template_1_3.png" />
     <Content Include="htmltemplates\templates\forms\template_2_1.png" />
     <Content Include="htmltemplates\images\groupware_logo.png" />
-    <Content Include="imgs\logo_1.svg" />
     <Content Include="public\images\groupware_logo.png" />
     <Content Include="public\images\user.jpg" />
     <Content Include="public\stylesheets\login.css" />
@@ -64,7 +63,10 @@
       <SubType>Code</SubType>
     </Content>
     <TypeScriptCompile Include="app.ts" />
-    <TypeScriptCompile Include="modules\Contains.ts">
+    <TypeScriptCompile Include="helpers\Constains.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="middlewears\MongoDBControl.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="routes\index.ts" />
@@ -79,9 +81,10 @@
     <Folder Include="htmltemplates\javascripts\" />
     <Folder Include="htmltemplates\images\" />
     <Folder Include="htmltemplates\templates\forms\" />
-    <Folder Include="imgs\" />
-    <Folder Include="modules\" />
     <Folder Include="htmltemplates\" />
+    <Folder Include="helpers\" />
+    <Folder Include="models\" />
+    <Folder Include="middlewears\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />

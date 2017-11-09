@@ -267,3 +267,7 @@ routes/user.js.map
 routes/index.js
 app.js.map
 app.js
+helpers/Contains.js
+*.map
+helpers/Constains.js
+middlewears/MongoDBControl.js
