@@ -62,11 +62,32 @@
     <Content Include="views\index.ejs">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\pages\admin\users.ejs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\templates\restricted_footer.ejs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\templates\restricted_header.ejs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\templates\restricted_mainmenu.ejs">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\templates\sidemenus\sidemenu_admin.ejs">
+      <SubType>Code</SubType>
+    </Content>
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="helpers\Constains.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="helpers\TemplateRenderControl.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="middlewears\MongoDBControl.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="routes\admin\users.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="routes\index.ts" />
@@ -90,12 +111,18 @@
     <Folder Include="public\javascripts\" />
     <Folder Include="public\stylesheets\" />
     <Folder Include="routes\" />
+    <Folder Include="routes\admin\" />
     <Folder Include="views\" />
+    <Folder Include="views\pages\" />
+    <Folder Include="views\pages\admin\" />
+    <Folder Include="views\templates\" />
+    <Folder Include="views\templates\sidemenus\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="htmltemplates\javascripts\reserved_control.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="public\javascripts\reserved_control.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

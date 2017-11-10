@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/reserved.css">
+    <title><%= title %></title>
+</head>
+<body>
+    
+    <%# template header %>    
+    <% include ../../templates/restricted_header.ejs %>
+
+    <%# template mainmenu %>
+    <% include ../../templates/restricted_mainmenu.ejs %>
+
+    <section class="content-base">
+        
+        <%# template page sidemenu %>
+        <% include ../../templates/sidemenus/sidemenu_admin.ejs %>
+
+        <div class="form-content-base">
+            <div class="form-wrapper">
+
+                <div class="form-header">
+                    <p><%= formTitle %></p>
+                </div>
+
+                <div class="form-content">
+                    
+                    <form name="useradminform" method="post" action="useradmin/saveUserForm">
+                        <input type="text" name="testinput"/>
+                        <br />
+                        <input type="submit" value="Submit" />
+                    </form>
+                    
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                    #content<br />
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <%# template footer %>
+    <% include ../../templates/restricted_footer.ejs %>
+
+</body>
+</html>

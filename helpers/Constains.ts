@@ -41,6 +41,6 @@ export class Constains {
 
     static get LOGIN_ERROR_WRONG_EMAIL_OR_PASSWORD(): string {
         return this._LOGIN_ERROR_1;
-    }
+    }    
 
 }

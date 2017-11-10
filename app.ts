@@ -5,6 +5,9 @@ import mongodb = require('mongodb');
 var parser = require('body-parser')
 
 import routes from './routes/index';
+import useradmin from './routes/admin/users';
+
+//var adminPage = require('./routes/admin');
 
 var app = express();
 app.use(parser.urlencoded({ extended: false }));
@@ -18,6 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //http://tanmaysarkar.com/html-form-with-ejs-template-in-nodejs/
 app.use('/', routes);
+app.use('/useradmin', useradmin);
+//app.use('/admin', adminPage.admin);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
