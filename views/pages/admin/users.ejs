@@ -2,7 +2,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8" />    
+    <script src="/javascripts/jquery-3.2.1.min.js"></script>
+    <script src="/javascripts/jquery-ui.min.js"></script>
+    <script src="/javascripts/reserved_control.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/reserved.css">
     <title><%= title %></title>
 </head>
@@ -28,28 +31,37 @@
 
                 <div class="form-content">
                     
-                    <form name="useradminform" method="post" action="useradmin/saveUserForm">
-                        <input type="text" name="testinput"/>
-                        <br />
-                        <input type="submit" value="Submit" />
-                    </form>
-                    
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
-                    #content<br />
+    <!--                <form id="useradmin-form" name="useradminform" method="post" action="useradmin/saveUserForm">-->
+                        <form id="useradmin-form" name="useradminform" onsubmit="useradminFormValidate(this);" method="post" action="useradmin/saveUserForm">
+                            <table style="margin: auto;">
+                                <tr>
+                                    <td>User e-mail:</td>
+                                    <td><input type="text" name="useremail" /></td>
+                                </tr>
+                                <tr>
+                                    <td>User password:</td>
+                                    <td><input type="text" name="userpassword" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Role:</td>
+                                    <td>
+                                        <select name="userrole" style="width: 100%;">
+                                            <option value="guest">Guest</option>
+                                            <option value="developer">Developer</option>
+                                            <option value="leader">Leader</option>
+                                            <option value="superuser">Superuser</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><center><span style="color: red;"><%= user_save_msg %></span></center></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><center><input type="submit" value="Submit"/></center></td>
+                                </tr>
+                            </table>
+                        </form>
+
                 </div>
 
             </div>

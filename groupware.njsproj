@@ -122,6 +122,8 @@
     <Compile Include="htmltemplates\javascripts\reserved_control.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="public\javascripts\jquery-3.2.1.min.js" />
+    <Compile Include="public\javascripts\jquery-ui.min.js" />
     <Compile Include="public\javascripts\reserved_control.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->

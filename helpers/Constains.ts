@@ -12,6 +12,8 @@ export class Constains {
 
     private static _LOGIN_ERROR_1: string = "A megadott e-mail cím vagy jelszó hibás!";
 
+    private static _ADMIN_USER_SAVE_ERROR_1: string = "A megadott e-mail cím vagy jelszó hiányzik!";        
+
     constructor() {
         
     }
@@ -42,5 +44,9 @@ export class Constains {
     static get LOGIN_ERROR_WRONG_EMAIL_OR_PASSWORD(): string {
         return this._LOGIN_ERROR_1;
     }    
+
+    static get ADMIN_USER_SAVE_ERROR_1(): string {
+        return this._ADMIN_USER_SAVE_ERROR_1;
+    }
 
 }
