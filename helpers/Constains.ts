@@ -1,18 +1,19 @@
 ﻿
 export class Constains {
 
+    //általános
     private static _PROGRAM_TITLE = "Groupware";
     private static _PROGRAM_VERSION = "0.1";
     private static _PROGRAM_BUILD_NUMBER = "0001";
-
+    //adatbázis
     private static _MONGODB_URL_PREFIX: string = "mongodb://";
     private static _MONGODB_HOST: string = "localhost";
     private static _MONGODB_PORT: string = "27017";
     private static _MONGODB_DATABASE_NAME: string = "dev2";
 
+    //felületen megjelenített szövegek
     private static _LOGIN_ERROR_1: string = "A megadott e-mail cím vagy jelszó hibás!";
-
-    private static _ADMIN_USER_SAVE_ERROR_1: string = "A megadott e-mail cím vagy jelszó hiányzik!";        
+    private static _ADMIN_USER_SAVE_ERROR_1: string = "A megadott e-mail cím vagy jelszó hiányzik!";
 
     constructor() {
         

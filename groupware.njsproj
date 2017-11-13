@@ -87,6 +87,9 @@
     <TypeScriptCompile Include="middlewears\MongoDBControl.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="models\User.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="routes\admin\users.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
