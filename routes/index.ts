@@ -12,7 +12,7 @@ router.post('/login', function (req, res) {
         email: req.body.loginemail,
         password: req.body.loginpassword
     }
-    console.log('Loginuser email: ' + loginuser.email + ' password: ' + loginuser.password);    
+    //console.log('Loginuser email: ' + loginuser.email + ' password: ' + loginuser.password);    
 
     if (loginuser.email === "" || loginuser.email === 'undefined') {
         loginMsg = constans.Constains.LOGIN_ERROR_WRONG_EMAIL_OR_PASSWORD;

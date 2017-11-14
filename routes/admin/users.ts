@@ -34,35 +34,52 @@ adminUserPage.post('/saveUserForm', function (req, res) {
         //https://codeforgeek.com/2016/04/asynchronous-programming-in-node-js/
         //ES6-os megoldás
         //http://www.sebastianseilund.com/nodejs-async-in-practice
+        //jó async tutorial
+        //http://stackexpert.com/2015/05/02/node-async/
 
-        console.log('@1');
-        async.series([
-            function (callback) {
-                mongoDbCtrl.saveNewUser(savedUser);
-                callback();
-            },
-            function (callback) {
-                mongoDbCtrl.getAllUser();
-                callback();
-            }
-        ], function (err) {
-            console.log('done!');
-        });
+        var users: Array<User>;
 
+        //console.log('@1');
+        //async.parallel([
+        //    function (callback) {
+        //        console.log('@2');
+        //        mongoDbCtrl.saveNewUser(savedUser);
+        //        callback();
+        //    },
+        //    function (callback) {
+        //        console.log('@11');
+        //        users = mongoDbCtrl.getAllUser();                
+        //        callback();
+        //    }
+        //], function (err) {
+        //    console.log('done!');            
+        //});
+
+        //console.log('@1');
         //async.series(
         //    [
-        //        callback => mongoDbCtrl.saveNewUser(savedUser),
-        //        callback => mongoDbCtrl.getAllUser()
+        //        callback => mongoDbCtrl.saveNewUser(savedUser, callback),
+        //        callback => mongoDbCtrl.getAllUser(callback)
         //    ], err => {
         //        if (err) throw err;
         //    }
         //);
-        console.log('@8');
+        //console.log('@7');
+
+        //for (var i = 0; i < mongoDbCtrl.users.length; i++) {
+        //    console.log('user: ' + mongoDbCtrl.users[i].email);
+        //}
+
+        console.log('@1');
+
+        async.series([callback => mongoDbCtrl.saveNewUser(savedUser, callback), callback => mongoDbCtrl.getAllUser(callback)], function () {
+            console.log('Done!');
+        });
+
+        console.log('@7');
+
     }
-
-
     
-
     res.redirect('/useradmin');
 });
 
