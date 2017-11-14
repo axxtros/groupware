@@ -21,10 +21,10 @@ export class User {
     private _password: string;
     private _role: Userrole;
     
-    constructor(email: string, password: string, role: Userrole) {
-        this._email = email;
-        this._password = password;
-        this._role = role;
+    constructor(email?: string, password?: string, role?: Userrole) {
+        this._email = email || '';
+        this._password = password || '';
+        this._role = role || null;
     }
 
     get email(): string {

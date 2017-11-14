@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+var async = require("async");
 var adminUserPage = express.Router();
 var constans = require("../../helpers/Constains");
 var templateJSONRenderCtrl = require("../../helpers/TemplateRenderControl");
@@ -20,7 +21,34 @@ adminUserPage.post('/saveUserForm', function (req, res) {
     else {
         //felhasználó mentése db-be
         var mongoDbCtrl = new mongoDbControl.MongoDBControl();
-        mongoDbCtrl.saveNewUser(savedUser);
+        //mongoDbCtrl.saveNewUser(savedUser);
+        //mongoDbCtrl.getAllUser();
+        //jó async tutorial
+        //https://codeforgeek.com/2016/04/asynchronous-programming-in-node-js/
+        //ES6-os megoldás
+        //http://www.sebastianseilund.com/nodejs-async-in-practice
+        console.log('@1');
+        async.series([
+            function (callback) {
+                mongoDbCtrl.saveNewUser(savedUser);
+                callback();
+            },
+            function (callback) {
+                mongoDbCtrl.getAllUser();
+                callback();
+            }
+        ], function (err) {
+            console.log('done!');
+        });
+        //async.series(
+        //    [
+        //        callback => mongoDbCtrl.saveNewUser(savedUser),
+        //        callback => mongoDbCtrl.getAllUser()
+        //    ], err => {
+        //        if (err) throw err;
+        //    }
+        //);
+        console.log('@8');
     }
     res.redirect('/useradmin');
 });

@@ -19,9 +19,9 @@ var Userrole = (function () {
 exports.Userrole = Userrole;
 var User = (function () {
     function User(email, password, role) {
-        this._email = email;
-        this._password = password;
-        this._role = role;
+        this._email = email || '';
+        this._password = password || '';
+        this._role = role || null;
     }
     Object.defineProperty(User.prototype, "email", {
         get: function () {
