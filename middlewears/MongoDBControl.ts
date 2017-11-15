@@ -52,21 +52,23 @@ export class MongoDBControl {
      * @param savedUser
      */
     public saveNewUser(savedUser: User, callback) {
-        console.log('@2');
+        //console.log('@2');
         var thisObject = this;
         if (user !== null) {   
-            //var db = new Db('dev2', new Server('localhost', 27017));
+            
             thisObject.db.open(function (err) {
                 if (err) throw err;
+
                 var collection = thisObject.db.collection(DB_USER_COLLECTION);
                 collection.insertOne({ 'email': savedUser.email, 'password': savedUser.password, 'role': savedUser.role.role });
-                console.log('@3');
+                //console.log('@3');
                 thisObject.db.close();                
 
-                setTimeout(function () {
-                    console.log('waiting after saved...');
-                    callback();
-                }, 1000);
+                callback();
+                //setTimeout(function () {
+                //    console.log('waiting after saved...');
+                //    callback();
+                //}, 1000);
             });            
         }
     }
@@ -78,27 +80,31 @@ export class MongoDBControl {
     }
 
     public getAllUser(callback) {
-        console.log('@4');
+        //console.log('@4');
         var resultList = new Array<User>();
         var thisObject = this;
         thisObject._users = new Array<User>();        
-        //var db = new Db('dev2', new Server('localhost', 27017));        
+                
         thisObject.db.open(function (err) {
             var collection = thisObject.db.collection(DB_USER_COLLECTION);
             collection.find({}).toArray(function (err, resultList) {
                 if (err) throw err;
+
                 for (var i = 0; i < resultList.length; i++) {
                     var dbUser = new user.User();
                     dbUser = resultList[i];
-                    console.log('@6 ' + dbUser.email);
+                    thisObject._users.push(resultList[i]);
+                    //console.log('@6 ' + dbUser.email);
                 }
-                
-                setTimeout(function () {
-                    console.log('waiting after getAllUser...');
-                    thisObject.db.close();
-                    console.log('@7');
-                    callback();
-                }, 5000);
+
+                //console.log('@7');
+                thisObject.db.close();
+                callback();
+                //setTimeout(function () {
+                //    console.log('waiting after getAllUser...');
+                //    thisObject.db.close();                    
+                //    callback();
+                //}, 5000);
             });
                                     
         });                                           

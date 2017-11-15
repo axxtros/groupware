@@ -11,24 +11,17 @@ type User = _user.User;
 type UserRole = _user.Userrole;
 
 var userSaveMsg: string = "";
+var mongoDbCtrl = new mongoDbControl.MongoDBControl();
 
 adminUserPage.post('/saveUserForm', function (req, res) {
 
-    //var user = {
-    //    email: req.body.useremail,
-    //    password: req.body.userpassword,
-    //    role: req.body.userrole
-    //};    
-
-    var savedUser = new _user.User(req.body.useremail, req.body.userpassword, new _user.Userrole(req.body.userrole));
+    var savedUser = new _user.User(req.body.useremail, req.body.userpassword, new _user.Userrole(req.body.userrole));        
 
     if (savedUser.email === "" || savedUser.email === 'undefined' || savedUser.password === "" || savedUser.password === 'undefined') {
         userSaveMsg = constans.Constains.ADMIN_USER_SAVE_ERROR_1;
     } else {
         //felhasználó mentése db-be
-        var mongoDbCtrl = new mongoDbControl.MongoDBControl();
-        //mongoDbCtrl.saveNewUser(savedUser);
-        //mongoDbCtrl.getAllUser();
+        //var mongoDbCtrl = new mongoDbControl.MongoDBControl();
 
         //jó async tutorial
         //https://codeforgeek.com/2016/04/asynchronous-programming-in-node-js/
@@ -36,10 +29,8 @@ adminUserPage.post('/saveUserForm', function (req, res) {
         //http://www.sebastianseilund.com/nodejs-async-in-practice
         //jó async tutorial
         //http://stackexpert.com/2015/05/02/node-async/
-
-        var users: Array<User>;
         
-        console.log('@1');
+        //console.log('@1');
         async.series(
             [
                 callback => mongoDbCtrl.saveNewUser(savedUser, callback),
@@ -48,19 +39,28 @@ adminUserPage.post('/saveUserForm', function (req, res) {
                 console.log('Done!');
                 res.redirect('/useradmin');
         });
-        console.log('@8');        
+        //console.log('@8');        
     }    
     //res.redirect('/useradmin');
 });
 
-adminUserPage.get('/', (req: express.Request, res: express.Response) => {
+adminUserPage.get('/', (req: express.Request, res: express.Response) => {    
 
-    var webPageJSONElements = {
-        formTitle: 'Administration - Users',
-        user_save_msg: userSaveMsg
-    };
+    async.series(
+        [
+            callback => mongoDbCtrl.getAllUser(callback)
+        ], function () {
 
-    res.render('pages/admin/users.ejs', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
+            var webPageJSONElements = {
+                create_new_user_form_title: 'Administration - Users',
+                user_save_msg: userSaveMsg,
+                userList: typeof mongoDbCtrl._users == 'undefined' ? mongoDbCtrl._users = new Array<User>() : mongoDbCtrl._users
+            };
+
+            res.render('pages/admin/users.ejs', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
+
+    });
+    
 });
 
 export default adminUserPage;
