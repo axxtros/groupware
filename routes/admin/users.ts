@@ -38,48 +38,18 @@ adminUserPage.post('/saveUserForm', function (req, res) {
         //http://stackexpert.com/2015/05/02/node-async/
 
         var users: Array<User>;
-
-        //console.log('@1');
-        //async.parallel([
-        //    function (callback) {
-        //        console.log('@2');
-        //        mongoDbCtrl.saveNewUser(savedUser);
-        //        callback();
-        //    },
-        //    function (callback) {
-        //        console.log('@11');
-        //        users = mongoDbCtrl.getAllUser();                
-        //        callback();
-        //    }
-        //], function (err) {
-        //    console.log('done!');            
-        //});
-
-        //console.log('@1');
-        //async.series(
-        //    [
-        //        callback => mongoDbCtrl.saveNewUser(savedUser, callback),
-        //        callback => mongoDbCtrl.getAllUser(callback)
-        //    ], err => {
-        //        if (err) throw err;
-        //    }
-        //);
-        //console.log('@7');        
-
+        
         console.log('@1');
-
-        async.series([callback => mongoDbCtrl.saveNewUser(savedUser, callback), callback => mongoDbCtrl.getAllUser(callback)], function () {
-            console.log('Done!');
-            res.redirect('/useradmin');
+        async.series(
+            [
+                callback => mongoDbCtrl.saveNewUser(savedUser, callback),
+                callback => mongoDbCtrl.getAllUser(callback)
+            ], function () {
+                console.log('Done!');
+                res.redirect('/useradmin');
         });
-
-        //for (var i = 0; i < mongoDbCtrl.users.length; i++) {
-        //    console.log('user: ' + mongoDbCtrl.users[i].email);
-        //}
-
         console.log('@8');        
-    }
-    
+    }    
     //res.redirect('/useradmin');
 });
 

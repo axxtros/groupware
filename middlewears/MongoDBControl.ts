@@ -24,13 +24,11 @@ const DB_USER_COLLECTION: string = "dat_user";
 export class MongoDBControl {        
 
     private mongoDBUrl: string;
-    private db: object;
-    private mongoClient: object;
+    private db: any;    
 
     constructor() {
         this.mongoDBUrl = constains.Constains.MONGOD_DB_URL;
-        this.db = new Db('dev2', new Server('localhost', 27017));
-        this.mongoClient = new MongoClient();
+        this.db = new Db(constains.Constains.MONGO_DB_NAME, new Server(constains.Constains.MONGO_DB_HOST, constains.Constains.MONGO_DB_PORT));
     }
 
     /**
@@ -40,13 +38,10 @@ export class MongoDBControl {
      */
     public saveLogin(_useremail: string, _password: string) {
         mongoClient.connect(this.mongoDBUrl, function (err, db) {
-            if (err) throw err;
-            //console.log("Database created!");
-            
+            if (err) throw err;                        
             var loginuser = { useremail: _useremail, password: _password, logintimestamp: Date.now() };
             db.collection("log_userlogin").insertOne(loginuser, function (err, res) {
-                if (err) throw err;
-                //console.log("1 document inserted");
+                if (err) throw err;                
             });            
             db.close();
         });
@@ -58,39 +53,22 @@ export class MongoDBControl {
      */
     public saveNewUser(savedUser: User, callback) {
         console.log('@2');
+        var thisObject = this;
         if (user !== null) {   
-
-            var db = new Db('dev2', new Server('localhost', 27017));
-            db.open(function (err, db) {
-                var collection = db.collection("dat_user");
-                collection.insert({ savedUser });
+            //var db = new Db('dev2', new Server('localhost', 27017));
+            thisObject.db.open(function (err) {
+                if (err) throw err;
+                var collection = thisObject.db.collection(DB_USER_COLLECTION);
+                collection.insertOne({ 'email': savedUser.email, 'password': savedUser.password, 'role': savedUser.role.role });
                 console.log('@3');
-                db.close();
-                callback();
-            });
+                thisObject.db.close();                
 
-
-            //mongoClient.connect(this.mongoDBUrl, function (err, db) {
-            //    if (err) {
-            //        //throw err;
-            //        console.log(err);
-            //        //return false;
-            //    }
-            //    //var newUser = { useremail: savedUser.email, password: savedUser.password, role: savedUser.role.role, createdate: Date.now() };
-            //    db.collection(DB_USER_COLLECTION).insertOne(savedUser, function (err, res) {
-            //        if (err) {
-            //            //throw err;
-            //            console.log(err);
-            //            return false;
-            //        }
-            //        console.log('@3');
-            //        db.close();                                                    
-            //    });                                
-            //});
-        }        
-        //console.log('@3_1');
-        //callback();
-        //return true;
+                setTimeout(function () {
+                    console.log('waiting after saved...');
+                    callback();
+                }, 1000);
+            });            
+        }
     }
 
     _users: Array<User>;
@@ -102,70 +80,28 @@ export class MongoDBControl {
     public getAllUser(callback) {
         console.log('@4');
         var resultList = new Array<User>();
-
-        var db = new Db('dev2', new Server('localhost', 27017));
-        // Fetch a collection to insert document into
-        db.open(function (err, db) {
-            var collection = db.collection("dat_user");
-            // Insert a single document
-            collection.find({}).toArray(function (err, result) {
-                console.log('@5');
-                for (var i = 0; i < result.length; i++) {
+        var thisObject = this;
+        thisObject._users = new Array<User>();        
+        //var db = new Db('dev2', new Server('localhost', 27017));        
+        thisObject.db.open(function (err) {
+            var collection = thisObject.db.collection(DB_USER_COLLECTION);
+            collection.find({}).toArray(function (err, resultList) {
+                if (err) throw err;
+                for (var i = 0; i < resultList.length; i++) {
                     var dbUser = new user.User();
-                    dbUser = result[i];
-                    resultList.push(dbUser);
-                    //this._users.push(dbUser);
-                    console.log('@6' + i);
-                    //console.log('user email: ' + dbUser.email + ' password: ' + dbUser.password + ' role: ' + dbUser.role.role);
+                    dbUser = resultList[i];
+                    console.log('@6 ' + dbUser.email);
                 }
-                db.close();
-                console.log('@7');
-
-                setTimeout(function () {
-                    console.log('waiting...');
-                    callback();
-                }, 1000);
-
                 
-            });                        
-        });
-
-        //MongoClient.collection(DB_USER_COLLECTION).find({}).toArray(function (err, result) {
-        //    if (err) throw err;
-        //    //this._users = new Array<User>();                                
-        //    for (var i = 0; i < result.length; i++) {
-        //        var dbUser = new user.User();
-        //        dbUser = result[i];
-        //        resultList.push(dbUser);
-        //        //this._users.push(dbUser);
-        //        console.log('@6');
-        //        //console.log('user email: ' + dbUser.email + ' password: ' + dbUser.password + ' role: ' + dbUser.role.role);
-        //    }
-        //    console.log('@5');
-        //    this.db.close();
-        //});
-
-
-        //mongoClient.connect(this.mongoDBUrl, function (err, db) {
-        //    if (err) {
-        //        throw err;                
-        //    }
-        //    db.collection(DB_USER_COLLECTION).find({}).toArray(function (err, result) {
-        //        if (err) throw err;
-        //        //this._users = new Array<User>();                                
-        //        for (var i = 0; i < result.length; i++) {
-        //            var dbUser = new user.User();
-        //            dbUser = result[i];
-        //            resultList.push(dbUser);
-        //            //this._users.push(dbUser);
-        //            console.log('@6');
-        //            //console.log('user email: ' + dbUser.email + ' password: ' + dbUser.password + ' role: ' + dbUser.role.role);
-        //        }   
-        //        console.log('@5');
-        //        db.close();                
-        //    });
-        //});                
-        //return resultList;                                    
+                setTimeout(function () {
+                    console.log('waiting after getAllUser...');
+                    thisObject.db.close();
+                    console.log('@7');
+                    callback();
+                }, 5000);
+            });
+                                    
+        });                                           
     }
 
     //mongoDB parancsok, hivatalos oldalon

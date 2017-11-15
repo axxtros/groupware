@@ -37,6 +37,18 @@ export class Constains {
         return this.PROGRAM_TITLE + " " + this.PROGRAM_VERSION + this.PROGRAM_BUILD_NUMBER;
     }
 
+    static get MONGO_DB_NAME(): string {
+        return this._MONGODB_DATABASE_NAME;
+    }
+
+    static get MONGO_DB_HOST(): string {
+        return this._MONGODB_HOST;
+    }
+
+    static get MONGO_DB_PORT(): string {
+        return this._MONGODB_PORT;
+    }
+
     static get MONGOD_DB_URL(): string {
         //"mongodb://localhost:27017/dev2";
         return this._MONGODB_URL_PREFIX + this._MONGODB_HOST + ":" + this._MONGODB_PORT + "/" + this._MONGODB_DATABASE_NAME;            

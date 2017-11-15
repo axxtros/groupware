@@ -49,6 +49,6 @@ export class User {
 
     set role(role: Userrole) {
         this._role = role;
-    }
+    } 
 
 }
