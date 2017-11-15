@@ -64,23 +64,23 @@ adminUserPage.post('/saveUserForm', function (req, res) {
         //        if (err) throw err;
         //    }
         //);
-        //console.log('@7');
-
-        //for (var i = 0; i < mongoDbCtrl.users.length; i++) {
-        //    console.log('user: ' + mongoDbCtrl.users[i].email);
-        //}
+        //console.log('@7');        
 
         console.log('@1');
 
         async.series([callback => mongoDbCtrl.saveNewUser(savedUser, callback), callback => mongoDbCtrl.getAllUser(callback)], function () {
             console.log('Done!');
+            res.redirect('/useradmin');
         });
 
-        console.log('@7');
+        //for (var i = 0; i < mongoDbCtrl.users.length; i++) {
+        //    console.log('user: ' + mongoDbCtrl.users[i].email);
+        //}
 
+        console.log('@8');        
     }
     
-    res.redirect('/useradmin');
+    //res.redirect('/useradmin');
 });
 
 adminUserPage.get('/', (req: express.Request, res: express.Response) => {
