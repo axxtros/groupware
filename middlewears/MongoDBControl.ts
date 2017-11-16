@@ -81,7 +81,7 @@ export class MongoDBControl {
                 //}, 1000);
             });            
         }
-    }    
+    }
 
     /**
      * Lekérdezi az összes tárolt felhasználót.
