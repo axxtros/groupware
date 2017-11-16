@@ -26,9 +26,9 @@ var testText: string;
 
 adminUserPage.post('/saveUserForm', function (req, res) {
 
-    var savedUser = new _user.User(req.body.useremail, req.body.userpassword, new _user.Userrole(req.body.userrole));        
+    var savedUser = new _user.User(req.body.useremail, req.body.userpassword, null);        
 
-    if (savedUser.email === "" || savedUser.email === 'undefined' || savedUser.password === "" || savedUser.password === 'undefined') {
+    if (savedUser.email === "" || typeof savedUser.email == 'undefined' || savedUser.password === "" || typeof savedUser.password == 'undefined') {
         userSaveMsg = constans.Constains.ADMIN_USER_SAVE_ERROR_1;
     } else {
         //felhasználó mentése db-be
@@ -49,7 +49,8 @@ adminUserPage.post('/saveUserForm', function (req, res) {
         //console.log('@1');
         async.series(
             [
-                callback => mongoDbCtrl.saveNewUser(savedUser, callback),
+                callback => mongoDbCtrl.getSelectedUserRole(req.body.userrole, callback),
+                callback => mongoDbCtrl.saveNewUser(savedUser, mongoDbCtrl.selectedUserRole, callback),
                 callback => mongoDbCtrl.getAllUser(callback)
             ], function () {
                 //console.log('Done!');
@@ -62,7 +63,7 @@ adminUserPage.post('/saveUserForm', function (req, res) {
 
 //TESZT: rész oldal refresh ajax-al, működik
 //https://stackoverflow.com/questions/43523576/update-part-of-html-page-using-node-js-and-ejs
-adminUserPage.post('/ajaxUpdate', function (req, res) {    
+adminUserPage.post('/ajaxUpdateTest', function (req, res) {    
 
     var tsID = req.body;
     console.log("stsID " + tsID.str);
@@ -76,13 +77,15 @@ adminUserPage.get('/', (req: express.Request, res: express.Response) => {
 
     async.series(
         [
-            callback => mongoDbCtrl.getAllUser(callback)
+            callback => mongoDbCtrl.getAllUser(callback),
+            callback => mongoDbCtrl.getAllUserRole(callback)
         ], function () {
 
             var webPageJSONElements = {
                 create_new_user_form_title: 'Administration - Users',
                 user_save_msg: userSaveMsg,
-                userList: typeof mongoDbCtrl._users == 'undefined' ? mongoDbCtrl._users = new Array<User>() : mongoDbCtrl._users,
+                userList: typeof mongoDbCtrl.users == 'undefined' ? mongoDbCtrl.users = new Array<User>() : mongoDbCtrl.users,
+                userRoleList: typeof mongoDbCtrl.userRoles == 'undefined' ? mongoDbCtrl.userRoles = new Array<UserRole>() : mongoDbCtrl.userRoles,
                 test_text: typeof testText == 'undefined' ? 'Kezdő szöveg.' : testText
             };
 

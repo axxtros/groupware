@@ -43,10 +43,9 @@
                                 <td>Role:</td>
                                 <td>
                                     <select name="userrole" style="width: 100%;">
-                                        <option value="guest">Guest</option>
-                                        <option value="developer">Developer</option>
-                                        <option value="leader">Leader</option>
-                                        <option value="superuser">Superuser</option>
+                                        <% for (var i = 0; i < userRoleList.length; i++) { %>
+                                            <option value="<%= userRoleList[i].value %>"><%= userRoleList[i].role %></option>
+                                        <% } %>                                        
                                     </select>
                                 </td>
                             </tr>
@@ -54,7 +53,7 @@
                                 <td colspan="2"><center><span style="color: red;"><%= user_save_msg %></span></center></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><center><input type="submit" value="Submit"/></center></td>
+                                <td colspan="2"><center><input type="submit" value="Submit" /></center></td>
                             </tr>
                         </table>
                     </form>                    
@@ -85,7 +84,7 @@
                             <tr>
                                 <th><%= userList[i].email %></th>
                                 <th><%= userList[i].password %></th>
-                                <th><%= userList[i].role %></th>
+                                <th><%= userList[i].role.role %></th>
                             </tr>
                         <% } %>
                     </table>

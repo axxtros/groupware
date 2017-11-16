@@ -21,14 +21,24 @@ type UserRole = user.Userrole;
 
 const DB_USER_COLLECTION: string = "dat_user";
 
+const DB_USERROLE_COLLECTION: string = "prd_userrole";
+
 export class MongoDBControl {        
 
     private mongoDBUrl: string;
-    private db: any;    
+    private db: any;  
+
+    private _users: Array<User>;
+    private _userRoles: Array<UserRole>;
+    private _selectedUserRole: UserRole;
 
     constructor() {
         this.mongoDBUrl = constains.Constains.MONGOD_DB_URL;
         this.db = new Db(constains.Constains.MONGO_DB_NAME, new Server(constains.Constains.MONGO_DB_HOST, constains.Constains.MONGO_DB_PORT));
+
+        //generate mongodb _id, müködik
+        //var o_id = new ObjectID();
+        //console.log(o_id);
     }
 
     /**
@@ -51,16 +61,16 @@ export class MongoDBControl {
      * Új felhasználó felvétele.
      * @param savedUser
      */
-    public saveNewUser(savedUser: User, callback) {
+    public saveNewUser(savedUser: User, selectedUserRole: UserRole, callback) {
         //console.log('@2');
         var thisObject = this;
-        if (user !== null) {   
-            
+        if (user !== null) {
+            savedUser.role = selectedUserRole;
             thisObject.db.open(function (err) {
                 if (err) throw err;
 
                 var collection = thisObject.db.collection(DB_USER_COLLECTION);
-                collection.insertOne({ 'email': savedUser.email, 'password': savedUser.password, 'role': savedUser.role.role });
+                collection.insertOne({ 'email': savedUser.email, 'password': savedUser.password, 'role': savedUser.role });
                 //console.log('@3');
                 thisObject.db.close();                
 
@@ -71,14 +81,12 @@ export class MongoDBControl {
                 //}, 1000);
             });            
         }
-    }
+    }    
 
-    _users: Array<User>;
-
-    public get users(): Array<User> {
-        return this._users;
-    }
-
+    /**
+     * Lekérdezi az összes tárolt felhasználót.
+     * @param callback
+     */
     public getAllUser(callback) {
         //console.log('@4');
         var resultList = new Array<User>();
@@ -110,6 +118,69 @@ export class MongoDBControl {
         });                                           
     }
 
+    /**
+     * Lekérdezi az összes tárolt lehetséges felhasználói szerepkört.
+     * @param callback
+     */
+    public getAllUserRole(callback) {
+        var thisObject = this;
+        thisObject._userRoles = new Array<UserRole>();  
+        thisObject.db.open(function (err) {
+            var collection = thisObject.db.collection(DB_USERROLE_COLLECTION);  
+            collection.find({}).toArray(function (err, resultList) {
+                if (err) throw err;
+
+                for (var i = 0; i < resultList.length; i++) {
+                    thisObject._userRoles.push(resultList[i]);                
+                }
+
+                thisObject.db.close();
+                callback();
+            });
+        });
+    }
+
+    /**
+     * Visszaadja a roleValue alapján a hozzátartozó teljes UserRole objektumot.
+     * @param callback
+     * @param roleValue
+     */
+    public getSelectedUserRole(roleValue: number, callback) {
+        var thisObject = this;
+        for (let role of thisObject._userRoles) {
+            if (role.value == roleValue) {
+                thisObject._selectedUserRole = role;                
+                break;
+            }
+        }
+        callback();
+    }
+
+    //getters/setters
+    public get users(): Array<User> {
+        return this._users;
+    }
+
+    public set users(users: Array<User>) {
+        this._users = users;
+    }
+
+    public get userRoles(): Array<UserRole> {
+        return this._userRoles;
+    }
+
+    public set userRoles(userRoles: Array<UserRole>) {
+        this._userRoles = userRoles;
+    }
+
+    public get selectedUserRole() {
+        return this._selectedUserRole;
+    }
+
+    public set selectedUserRole(selectedUserRole: UserRole) {
+        this._selectedUserRole = selectedUserRole;
+    }
+
     //mongoDB parancsok, hivatalos oldalon
     //https://docs.mongodb.com/manual/introduction/
     //find id alapján
@@ -121,5 +192,15 @@ export class MongoDBControl {
     //mongoDB belső függvények kiküszöbölése
     //https://mongodb.github.io/node-mongodb-native/api-generated/collection.html
 
-
 }
+
+/*
+
+db.prd_userrole.insertMany( [
+    { role: "Guest", value: 1 },
+    { role: "Developer", value: 2 },
+    { role: "Leader", value: 3 },
+    { role: "Superuser", value: 4 }
+] );
+
+*/

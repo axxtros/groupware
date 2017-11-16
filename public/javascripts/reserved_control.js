@@ -27,7 +27,7 @@ function useradminFormValidate(formElement) {
 function ajaxUpdateTest(element) {
     var tsId = "Ez a kliens oldalról jön!";
     $.ajax({
-        url: 'useradmin/ajaxUpdate',
+        url: 'useradmin/ajaxUpdateTest',
         type: 'post',
         data: {
             str: tsId
