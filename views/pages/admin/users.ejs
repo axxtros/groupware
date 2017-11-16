@@ -23,8 +23,8 @@
         <% include ../../templates/sidemenus/sidemenu_admin.ejs %>
 
         <div class="form-content-base">
+            
             <div class="form-wrapper">
-
                 <div class="form-header">
                     <p><%= create_new_user_form_title %></p>
                 </div>
@@ -61,6 +61,13 @@
                 </div>
             </div>
 
+            <br/>
+            <div>
+                <p id="holder"><%= test_text %></p><br/>
+                <button id="test-button" type="button" onclick="ajaxUpdateTest(this);">Ajax update</button>
+            </div>
+            <br/>
+
             <%# users list %>
             <div class="form-wrapper">
                 <div class="form-header">
@@ -68,12 +75,23 @@
                 </div>
                 <div class="form-content">
 
-                    <% for (var i = 0; i < userList.length; i++) { %>
-                        <%= userList[i].email %><br />
-                    <% } %>
-
+                    <table style="margin: auto; width: 100%;">
+                        <tr>
+                            <th>E-mail</th>
+                            <th>Password</th>
+                            <th>Role</th>
+                        </tr>
+                        <% for (var i = 0; i < userList.length; i++) { %>
+                            <tr>
+                                <th><%= userList[i].email %></th>
+                                <th><%= userList[i].password %></th>
+                                <th><%= userList[i].role %></th>
+                            </tr>
+                        <% } %>
+                    </table>
                 </div>
             </div>
+
         </div>
     </section>
 

@@ -2,7 +2,7 @@
 import express = require('express');
 import path = require('path');
 import mongodb = require('mongodb');
-var parser = require('body-parser')
+var parser = require('body-parser');
 
 import routes from './routes/index';
 import useradmin from './routes/admin/users';

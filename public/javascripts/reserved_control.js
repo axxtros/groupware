@@ -19,3 +19,31 @@ function useradminFormValidate(formElement) {
 
     return false;
 }
+
+//https://stackoverflow.com/questions/43523576/update-part-of-html-page-using-node-js-and-ejs
+function ajaxUpdateTest(element) {
+    var tsId = "Ez a kliens oldalról jön!";
+    $.ajax({
+        url: 'useradmin/ajaxUpdate',
+        type: 'post',
+        data: {
+            str: tsId
+        },        
+        success: function (data) {
+            $('#holder').html(data.testText);
+        }
+    });
+
+    //lehet így is, működik
+    //$.ajax({
+    //    url: "useradmin/ajaxUpdate",
+    //    type: "POST",
+    //    data: {
+    //        str: tsId
+    //    }
+    //})
+    //.done(function (data) {
+    //    console.log("Sample of data:", data);
+    //    $('#holder').html(data.testText);
+    //});
+}
