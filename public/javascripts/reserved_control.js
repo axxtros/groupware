@@ -20,7 +20,10 @@ function useradminFormValidate(formElement) {
     return false;
 }
 
+//ajax example
 //https://stackoverflow.com/questions/43523576/update-part-of-html-page-using-node-js-and-ejs
+//ajax példa
+//https://stackoverflow.com/questions/41665948/passing-variable-from-jquery-ajax-to-nodejs
 function ajaxUpdateTest(element) {
     var tsId = "Ez a kliens oldalról jön!";
     $.ajax({
