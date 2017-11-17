@@ -1,4 +1,5 @@
 ﻿import express = require('express');
+import async = require('async');
 const router = express.Router();
 
 import * as constans from '../helpers/Constains';
@@ -11,18 +12,17 @@ router.post('/login', function (req, res) {
     var loginuser = {
         email: req.body.loginemail,
         password: req.body.loginpassword
-    }
-    //console.log('Loginuser email: ' + loginuser.email + ' password: ' + loginuser.password);    
+    }    
 
-    if (loginuser.email === "" || loginuser.email === 'undefined') {
-        loginMsg = constans.Constains.LOGIN_ERROR_WRONG_EMAIL_OR_PASSWORD;
+    if (loginuser.email.trim() === "" || typeof loginuser.email.trim() === 'undefined' || loginuser.password.trim() === "" || typeof loginuser.password.trim() === 'undefined') {
+        loginMsg = constans.Constains.LOGIN_ERROR_1;
+        res.redirect('/');     
     } else {        
         var mongoDbCtrl = new mongoDbControl.MongoDBControl();
         mongoDbCtrl.saveLogin(loginuser.email, loginuser.password);
         loginMsg = "";
-    }  
-    
-    res.redirect('/useradmin');
+        res.redirect('/useradmin');
+    }
 });
 
 router.get('/', (req: express.Request, res: express.Response) => {

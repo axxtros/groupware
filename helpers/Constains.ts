@@ -12,8 +12,9 @@ export class Constains {
     private static _MONGODB_DATABASE_NAME: string = "groupware";
 
     //felületen megjelenített szövegek
-    private static _LOGIN_ERROR_1: string = "A megadott e-mail cím vagy jelszó hibás!";
-    private static _ADMIN_USER_SAVE_ERROR_1: string = "A megadott e-mail cím vagy jelszó hiányzik!";
+    public static readonly LOGIN_ERROR_1: string = "A megadott e-mail cím vagy jelszó hibás!";
+    public static readonly LOGIN_ERROR_2: string = "A megadott e-mail cím vagy jelszó hiányzik!";
+    public static readonly ADMIN_USER_SAVE_ERROR_1: string = "A megadott e-mail cím vagy jelszó hiányzik!";
 
     constructor() {
         
@@ -52,14 +53,6 @@ export class Constains {
     static get MONGOD_DB_URL(): string {
         //"mongodb://localhost:27017/dev2";
         return this._MONGODB_URL_PREFIX + this._MONGODB_HOST + ":" + this._MONGODB_PORT + "/" + this._MONGODB_DATABASE_NAME;            
-    }
-
-    static get LOGIN_ERROR_WRONG_EMAIL_OR_PASSWORD(): string {
-        return this._LOGIN_ERROR_1;
     }    
-
-    static get ADMIN_USER_SAVE_ERROR_1(): string {
-        return this._ADMIN_USER_SAVE_ERROR_1;
-    }
 
 }

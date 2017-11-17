@@ -22,8 +22,8 @@ type User = user.User;
 type UserRole = user.Userrole;
 
 const DB_USER_COLLECTION: string = "dat_user";
-
 const DB_USERROLE_COLLECTION: string = "prd_userrole";
+const DB_USERLOGIN_COLLECTION: string = "log_userlogin";
 
 export class MongoDBControl {        
 
@@ -41,23 +41,7 @@ export class MongoDBControl {
         //generate mongodb _id, müködik
         //var o_id = new ObjectID();
         //console.log(o_id);
-    }
-
-    /**
-     * Menti a belépések naplózását időbélyeggel.
-     * @param _useremail
-     * @param _password
-     */
-    public saveLogin(_useremail: string, _password: string) {
-        mongoClient.connect(this.mongoDBUrl, function (err, db) {
-            if (err) throw err;                        
-            var loginuser = { useremail: _useremail, password: _password, logintimestamp: Date.now() };
-            db.collection("log_userlogin").insertOne(loginuser, function (err, res) {
-                if (err) throw err;                
-            });            
-            db.close();
-        });
-    }
+    }  
 
     /**
      * Új felhasználó felvétele.
@@ -176,7 +160,32 @@ export class MongoDBControl {
         });
     }    
 
-    //getters/setters
+    /**
+     * Ellenörzi, hogy a felhasználó email/password páros alapján a felhasználó bejelentkezhet-e.
+     * @param userEmail
+     * @param userPassword
+     */
+    public checkUserLogin(userEmail: string, userPassword: string) {
+
+    }
+
+    /**
+     * Menti a belépések naplózását időbélyeggel.
+     * @param _useremail
+     * @param _password
+     */
+    public saveLogin(_useremail: string, _password: string) {
+        mongoClient.connect(this.mongoDBUrl, function (err, db) {
+            if (err) throw err;
+            var loginuser = { useremail: _useremail, password: _password, logintimestamp: Date.now() };
+            db.collection("log_userlogin").insertOne(loginuser, function (err, res) {
+                if (err) throw err;
+            });
+            db.close();
+        });
+    }
+
+    //getters/setters ---------------------------------------------------------
     public get registratedUserList(): Array<User> {
         return this._registratedUserList;
     }
@@ -207,6 +216,8 @@ export class MongoDBControl {
     //https://docs.mongodb.com/manual/reference/database-references/#dbref-explanation
 
 }
+
+//Ezeket a script-eket kell megfutatni a mongoDB-be, első indítás elött.
 
 /*
 
