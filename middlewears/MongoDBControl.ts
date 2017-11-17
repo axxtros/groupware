@@ -83,7 +83,7 @@ export class MongoDBControl {
     }    
 
     /**
-     * Visszaadja a roleValue alapján a hozzátartozó teljes UserRole objektumot.
+     * Visszaadja a roleValue alapján a hozzátartozó role _id-t. (_selectedUserRoleId)
      * @param callback
      * @param roleValue
      */
