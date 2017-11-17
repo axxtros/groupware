@@ -30,6 +30,7 @@ adminUserPage.post('/saveUserForm', function (req, res) {
 
     if (savedUser.email === "" || typeof savedUser.email == 'undefined' || savedUser.password === "" || typeof savedUser.password == 'undefined') {
         userSaveMsg = constans.Constains.ADMIN_USER_SAVE_ERROR_1;
+        res.redirect('/useradmin');
     } else {
         //felhasználó mentése db-be
         //var mongoDbCtrl = new mongoDbControl.MongoDBControl();
@@ -45,23 +46,18 @@ adminUserPage.post('/saveUserForm', function (req, res) {
         //https://stackoverflow.com/questions/43523576/update-part-of-html-page-using-node-js-and-ejs
         //ajax példa
         //https://stackoverflow.com/questions/41665948/passing-variable-from-jquery-ajax-to-nodejs
-        
-        //console.log('@1');
+                
         async.series(
-            [
+            [                
                 callback => mongoDbCtrl.getSelectedUserRole(req.body.userrole, callback),
-                callback => mongoDbCtrl.saveNewUser(savedUser, mongoDbCtrl.selectedUserRole, callback),
-                callback => mongoDbCtrl.getAllUser(callback)
-            ], function () {
-                //console.log('Done!');
+                callback => mongoDbCtrl.saveNewUser(savedUser, callback)
+            ], function () {                
                 res.redirect('/useradmin');
-        });
-        //console.log('@8');        
+        });        
     }    
-    //res.redirect('/useradmin');
 });
 
-//TESZT: rész oldal refresh ajax-al, működik
+//TESZT: rész oldal refresh ajax-al, működik (Ne töröld ki!)
 //https://stackoverflow.com/questions/43523576/update-part-of-html-page-using-node-js-and-ejs
 adminUserPage.post('/ajaxUpdateTest', function (req, res) {    
 
@@ -74,25 +70,22 @@ adminUserPage.post('/ajaxUpdateTest', function (req, res) {
 });
 
 adminUserPage.get('/', (req: express.Request, res: express.Response) => {    
-
     async.series(
-        [
-            callback => mongoDbCtrl.getAllUser(callback),
-            callback => mongoDbCtrl.getAllUserRole(callback)
-        ], function () {
-
+        [            
+            callback => mongoDbCtrl.getAllUserRole(callback),
+            callback => mongoDbCtrl.getAllRegistratedUser(callback)
+        ], function () {            
             var webPageJSONElements = {
                 create_new_user_form_title: 'Administration - Users',
                 user_save_msg: userSaveMsg,
-                userList: typeof mongoDbCtrl.users == 'undefined' ? mongoDbCtrl.users = new Array<User>() : mongoDbCtrl.users,
                 userRoleList: typeof mongoDbCtrl.userRoles == 'undefined' ? mongoDbCtrl.userRoles = new Array<UserRole>() : mongoDbCtrl.userRoles,
+                userList: typeof mongoDbCtrl.registratedUserList == 'undefined' ? mongoDbCtrl.registratedUserList = new Array<User>() : mongoDbCtrl.registratedUserList,                
                 test_text: typeof testText == 'undefined' ? 'Kezdő szöveg.' : testText
             };
 
             res.render('pages/admin/users.ejs', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
 
-    });
-    
+    });    
 });
 
 export default adminUserPage;

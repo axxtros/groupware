@@ -30,9 +30,8 @@ export class MongoDBControl {
     private mongoDBUrl: string;
     private db: any;    
 
-    private _users: Array<User>;
+    private _registratedUserList: Array<User>;
     private _userRoles: Array<UserRole>;
-    private _selectedUserRole: UserRole;
     private _selectedUserRoleId: any;
 
     constructor() {
@@ -64,17 +63,14 @@ export class MongoDBControl {
      * Új felhasználó felvétele.
      * @param savedUser
      */
-    public saveNewUser(savedUser: User, selectedUserRole: UserRole, callback) {
-        //console.log('@2');
+    public saveNewUser(savedUser: User, callback) {
         var thisObject = this;
-        if (user !== null) {
-            savedUser.role = selectedUserRole;
+        if (user !== null) {            
             thisObject.db.open(function (err) {
                 if (err) throw err;
 
                 var collection = thisObject.db.collection(DB_USER_COLLECTION);
                 collection.insertOne({ 'email': savedUser.email, 'password': savedUser.password, 'role_id': thisObject._selectedUserRoleId });
-                //console.log('@3');
                 thisObject.db.close();                
 
                 callback();
@@ -87,65 +83,79 @@ export class MongoDBControl {
     }    
 
     /**
-     * Lekérdezi az összes tárolt felhasználót. (_users)
+     * Visszaadja a roleValue alapján a hozzátartozó teljes UserRole objektumot.
+     * @param callback
+     * @param roleValue
+     */
+    public getSelectedUserRole(roleValue: number, callback) {
+        var thisObject = this;
+        for (let role of thisObject._userRoles) {
+            if (role.value == roleValue) {
+                thisObject._selectedUserRoleId = role._id;
+                break;
+            }
+        }
+        callback();
+    }
+
+    /**
+     * Lekérdezi és visszaadja az összes regisztrált felhasználót.
      * @param callback
      */
-    public getAllUser(callback) {
-        //console.log('@4');
-        var resultList = new Array<User>();
+    public getAllRegistratedUser(callback) {                
+        async.series(
+            [
+                callback => this.getRegUsers(callback),
+                callback => this.mergeUsersWithRole(callback)
+            ], function () {
+                callback();
+            });                     
+    }
+
+    /**
+     * Lekérdezi az adatbázisban tárolt felhasználókat.
+     * @param callback
+     */
+    private getRegUsers(callback) {        
         var thisObject = this;
-        thisObject._users = new Array<User>();        
-                
+        thisObject._registratedUserList = new Array<User>();
+
         thisObject.db.open(function (err) {
             var collection = thisObject.db.collection(DB_USER_COLLECTION);
             collection.find({}).toArray(function (err, resultList) {
                 if (err) throw err;
-
                 for (var i = 0; i < resultList.length; i++) {
                     var dbUser = new user.User();
-                    dbUser = resultList[i];
-                    //dbUser.role = thisObject.getUserRoleByID(dbUser.role_id);                    
-
-                    dbUser.role = new user.Userrole();
-                    var roleCollection = thisObject.db.collection(DB_USERROLE_COLLECTION);
-                    roleCollection.findOne({ _id: new ObjectID(dbUser.role_id) }, function (err, result) {
-                        if (err) throw err;
-                        dbUser.role._id = result._id;
-                        dbUser.role.role = result.role;
-                        dbUser.role.value = result.value;                        
-                    });                    
-                    thisObject._users.push(dbUser);
-                    //console.log('@6 ' + dbUser.email);
+                    dbUser = resultList[i];                    
+                    thisObject._registratedUserList.push(dbUser);
                 }
-
-                //console.log('@7');
                 thisObject.db.close();
-                callback('aaa');
-                //setTimeout(function () {
-                //    console.log('waiting after getAllUser...');
-                //    thisObject.db.close();                    
-                //    callback();
-                //}, 5000);
+                callback();
             });
-                                    
-        });                                           
-    }
-
-    private getUserRoleByID(roleId: any): any {
-        var thisObject = this;        
-        var resultUserRole = new user.Userrole();
-        var collection = thisObject.db.collection(DB_USERROLE_COLLECTION);
-        collection.findOne({ _id: new ObjectID(roleId) }, function (err, result) {
-            if (err) throw err;
-            resultUserRole._id = result._id;
-            resultUserRole.role = result.role;
-            resultUserRole.value = result.value;            
-            return resultUserRole;
-        });        
+        });
     }
 
     /**
-     * Lekérdezi az összes tárolt lehetséges felhasználói szerepkört.
+     * Össze merge-li az egyes felhasználókat a saját role objektumukkal, így megfelel az OOP typescript követelményeknek az objektum struktúra.
+     * @param callback
+     */
+    private mergeUsersWithRole(callback) {        
+        var thisObject = this;
+        for (var i = 0; i < thisObject._registratedUserList.length; i++) {
+            var dbUser = thisObject._registratedUserList[i];
+            for (var j = 0; j < thisObject._userRoles.length; j++) {
+                var dbRole = thisObject._userRoles[j];
+                if (dbUser.role_id.equals(dbRole._id)) {                    
+                    dbUser.role = dbRole;
+                    break;
+                }
+            }
+        }
+        callback();
+    }    
+    
+    /**
+     * Lekérdezi az összes tárolt felhasználói szerepkört.
      * @param callback
      */
     public getAllUserRole(callback) {
@@ -164,32 +174,15 @@ export class MongoDBControl {
                 callback();
             });
         });
-    }
-
-    /**
-     * Visszaadja a roleValue alapján a hozzátartozó teljes UserRole objektumot.
-     * @param callback
-     * @param roleValue
-     */
-    public getSelectedUserRole(roleValue: number, callback) {
-        var thisObject = this;
-        for (let role of thisObject._userRoles) {
-            if (role.value == roleValue) {
-                //thisObject._selectedUserRole = role;
-                thisObject._selectedUserRoleId = new ObjectID(role._id);
-                break;
-            }
-        }
-        callback();
-    }
+    }    
 
     //getters/setters
-    public get users(): Array<User> {
-        return this._users;
+    public get registratedUserList(): Array<User> {
+        return this._registratedUserList;
     }
 
-    public set users(users: Array<User>) {
-        this._users = users;
+    public set registratedUserList(registratedUserList: Array<User>) {
+        this._registratedUserList = registratedUserList;
     }
 
     public get userRoles(): Array<UserRole> {
@@ -198,14 +191,6 @@ export class MongoDBControl {
 
     public set userRoles(userRoles: Array<UserRole>) {
         this._userRoles = userRoles;
-    }
-
-    public get selectedUserRole() {
-        return this._selectedUserRole;
-    }
-
-    public set selectedUserRole(selectedUserRole: UserRole) {
-        this._selectedUserRole = selectedUserRole;
     }
 
     //mongoDB parancsok, hivatalos oldalon
