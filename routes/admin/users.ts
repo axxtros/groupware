@@ -29,8 +29,7 @@ adminUserPage.post('/saveUserForm', function (req, res) {
     var savedUser = new _user.User(req.body.useremail, req.body.userpassword, null);        
 
     if (savedUser.email === "" || typeof savedUser.email == 'undefined' || savedUser.password === "" || typeof savedUser.password == 'undefined') {
-        userSaveMsg = constans.Constains.ADMIN_USER_SAVE_ERROR_1;
-        res.redirect('/useradmin');
+        userSaveMsg = constans.Constains.ADMIN_USER_SAVE_ERROR_1;        
     } else {
         //felhasználó mentése db-be
         //var mongoDbCtrl = new mongoDbControl.MongoDBControl();
@@ -52,9 +51,11 @@ adminUserPage.post('/saveUserForm', function (req, res) {
                 callback => mongoDbCtrl.getSelectedUserRole(req.body.userrole, callback),
                 callback => mongoDbCtrl.saveNewUser(savedUser, callback)
             ], function () {                
-                res.redirect('/useradmin');
+                //Done!
+                //NOP...
         });        
-    }    
+    }
+    res.redirect('/useradmin');
 });
 
 //TESZT: rész oldal refresh ajax-al, működik (Ne töröld ki!)
