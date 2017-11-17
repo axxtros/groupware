@@ -13,6 +13,8 @@ var Db = require('mongodb').Db,
     BSON = require('mongodb').BSON,
     assert = require('assert');
 
+import async = require('async');
+
 import * as constains from "../helpers/Constains";
 import * as user from "../models/User";
 
@@ -26,15 +28,16 @@ const DB_USERROLE_COLLECTION: string = "prd_userrole";
 export class MongoDBControl {        
 
     private mongoDBUrl: string;
-    private db: any;  
+    private db: any;    
 
     private _users: Array<User>;
     private _userRoles: Array<UserRole>;
     private _selectedUserRole: UserRole;
+    private _selectedUserRoleId: any;
 
     constructor() {
         this.mongoDBUrl = constains.Constains.MONGOD_DB_URL;
-        this.db = new Db(constains.Constains.MONGO_DB_NAME, new Server(constains.Constains.MONGO_DB_HOST, constains.Constains.MONGO_DB_PORT));
+        this.db = new Db(constains.Constains.MONGO_DB_NAME, new Server(constains.Constains.MONGO_DB_HOST, constains.Constains.MONGO_DB_PORT));        
 
         //generate mongodb _id, müködik
         //var o_id = new ObjectID();
@@ -70,7 +73,7 @@ export class MongoDBControl {
                 if (err) throw err;
 
                 var collection = thisObject.db.collection(DB_USER_COLLECTION);
-                collection.insertOne({ 'email': savedUser.email, 'password': savedUser.password, 'role': savedUser.role });
+                collection.insertOne({ 'email': savedUser.email, 'password': savedUser.password, 'role_id': thisObject._selectedUserRoleId });
                 //console.log('@3');
                 thisObject.db.close();                
 
@@ -81,10 +84,10 @@ export class MongoDBControl {
                 //}, 1000);
             });            
         }
-    }
+    }    
 
     /**
-     * Lekérdezi az összes tárolt felhasználót.
+     * Lekérdezi az összes tárolt felhasználót. (_users)
      * @param callback
      */
     public getAllUser(callback) {
@@ -101,13 +104,23 @@ export class MongoDBControl {
                 for (var i = 0; i < resultList.length; i++) {
                     var dbUser = new user.User();
                     dbUser = resultList[i];
-                    thisObject._users.push(resultList[i]);
+                    //dbUser.role = thisObject.getUserRoleByID(dbUser.role_id);                    
+
+                    dbUser.role = new user.Userrole();
+                    var roleCollection = thisObject.db.collection(DB_USERROLE_COLLECTION);
+                    roleCollection.findOne({ _id: new ObjectID(dbUser.role_id) }, function (err, result) {
+                        if (err) throw err;
+                        dbUser.role._id = result._id;
+                        dbUser.role.role = result.role;
+                        dbUser.role.value = result.value;                        
+                    });                    
+                    thisObject._users.push(dbUser);
                     //console.log('@6 ' + dbUser.email);
                 }
 
                 //console.log('@7');
                 thisObject.db.close();
-                callback();
+                callback('aaa');
                 //setTimeout(function () {
                 //    console.log('waiting after getAllUser...');
                 //    thisObject.db.close();                    
@@ -116,6 +129,19 @@ export class MongoDBControl {
             });
                                     
         });                                           
+    }
+
+    private getUserRoleByID(roleId: any): any {
+        var thisObject = this;        
+        var resultUserRole = new user.Userrole();
+        var collection = thisObject.db.collection(DB_USERROLE_COLLECTION);
+        collection.findOne({ _id: new ObjectID(roleId) }, function (err, result) {
+            if (err) throw err;
+            resultUserRole._id = result._id;
+            resultUserRole.role = result.role;
+            resultUserRole.value = result.value;            
+            return resultUserRole;
+        });        
     }
 
     /**
@@ -149,7 +175,8 @@ export class MongoDBControl {
         var thisObject = this;
         for (let role of thisObject._userRoles) {
             if (role.value == roleValue) {
-                thisObject._selectedUserRole = role;                
+                //thisObject._selectedUserRole = role;
+                thisObject._selectedUserRoleId = new ObjectID(role._id);
                 break;
             }
         }
@@ -191,6 +218,8 @@ export class MongoDBControl {
     //https://www.w3schools.com/nodejs/nodejs_mongodb_insert.asp
     //mongoDB belső függvények kiküszöbölése
     //https://mongodb.github.io/node-mongodb-native/api-generated/collection.html
+    //mongoDB manual referencia használata
+    //https://docs.mongodb.com/manual/reference/database-references/#dbref-explanation
 
 }
 

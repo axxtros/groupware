@@ -1,11 +1,12 @@
 ﻿
-export class Userrole {    
+export class Userrole {
+    public _id: any;
     private _role: string;
     private _value: number;
 
     constructor(value?: number) {
         this._value = value;
-    }    
+    }
 
     get role(): string {
         return this._role;
@@ -22,13 +23,14 @@ export class Userrole {
     set value(value: number) {
         this._value = value;
     }
-
 }
 
-export class User {
+export class User {    
+    public _id: any;
     private _email: string;
     private _password: string;
     private _role: Userrole;
+    public role_id: any;
 
     constructor(email?: string, password?: string, role?: Userrole) {
         this._email = email || '';
@@ -58,6 +60,5 @@ export class User {
 
     set role(role: Userrole) {
         this._role = role;
-    } 
-
+    }
 }
