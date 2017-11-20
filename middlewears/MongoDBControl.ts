@@ -65,6 +65,7 @@ export class MongoDBControl {
                     thisObject._isCheckedLoginUser = false;
                 }                
                 thisObject.db.close();
+
                 callback();
             });
         });

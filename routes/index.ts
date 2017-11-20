@@ -1,4 +1,5 @@
-﻿import express = require('express');
+﻿'use strict';
+import express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 import async = require('async');
@@ -38,7 +39,7 @@ router.post('/login', function (req, res) {
         ], function () {
             if (mongoDbCtrl.isCheckedLoginUser) {
                 mongoDbCtrl.saveLogin(loginuser.email, loginuser.password);
-                loginMsg = "";
+                loginMsg = "";                
                 res.redirect('/useradmin');
             } else {
                 loginMsg = constans.Constains.LOGIN_ERROR_1;
@@ -58,9 +59,13 @@ router.post('/login', function (req, res) {
 });
 
 router.get('/', (req: express.Request, res: express.Response) => {
-    
+
+    req.session.uname = 'Gábor';
+
+
     var webPageJSONElements = {
-        login_msg: loginMsg
+        login_msg: loginMsg,
+        uname: req.session.uname
     };    
 
     res.render('index', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));

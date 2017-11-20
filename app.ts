@@ -1,4 +1,4 @@
-﻿
+﻿'use strict';
 import express = require('express');
 import debug = require('debug');
 import path = require('path');

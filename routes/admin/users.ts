@@ -92,12 +92,13 @@ adminUserPage.get('/', (req: express.Request, res: express.Response) => {
                 user_save_msg: userSaveMsg,
                 userRoleList: typeof mongoDbCtrl.userRoles == 'undefined' ? mongoDbCtrl.userRoles = new Array<UserRole>() : mongoDbCtrl.userRoles,
                 userList: typeof mongoDbCtrl.registratedUserList == 'undefined' ? mongoDbCtrl.registratedUserList = new Array<User>() : mongoDbCtrl.registratedUserList,                
-                test_text: typeof testText == 'undefined' ? 'Kezdő szöveg.' : testText
+                test_text: typeof testText == 'undefined' ? 'Kezdő szöveg.' : testText,
+                uname: req.session.uname
             };
 
             res.render('pages/admin/users.ejs', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
 
     });    
-});
+}); 
 
 export default adminUserPage;
