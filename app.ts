@@ -1,8 +1,10 @@
-﻿import debug = require('debug');
+﻿
 import express = require('express');
+import debug = require('debug');
 import path = require('path');
 import mongodb = require('mongodb');
 var parser = require('body-parser');
+var session = require('express-session');
 
 import routes from './routes/index';
 import useradmin from './routes/admin/users';
@@ -12,6 +14,14 @@ import useradmin from './routes/admin/users';
 var app = express();
 app.use(parser.urlencoded({ extended: false }));
 app.use(parser.json());
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +35,7 @@ app.use('/useradmin', useradmin);
 //app.use('/admin', adminPage.admin);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function (req, res, next) {    
     var err = new Error('Not Found');
     err['status'] = 404;
     next(err);
@@ -35,7 +45,7 @@ app.use(function (req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+if (app.get('env') === 'production') {
     app.use((err: any, req, res, next) => {
         res.status(err['status'] || 500);
         res.render('error', {

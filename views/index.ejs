@@ -5,12 +5,13 @@
     <meta charset="utf-8" />    
     <script src="/javascripts/jquery-3.2.1.min.js"></script>
     <script src="/javascripts/jquery-ui.min.js"></script>
+    <script src="/javascripts/reserved_control.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/login.css">    
     <title><%= title %></title>
 </head>
 <body>
 
-    <form name="loginform" method="POST" action="/login">
+    <form id="login-form" name="loginform" method="POST"> <!-- onsubmit="loginValidate(this);" --> <!-- action="/login" -->
         <table class="login-form-table-base" border="0">
             <tr>
                 <td class="login-form-table-logo-sc" colspan="2"></td>
@@ -24,17 +25,17 @@
                 <td><input class="login-form-input-sc" name="loginpassword" type="password" maxlength="30" /></td>
             </tr>
             <tr>
-                <td class="login-form-table-msg-sc" colspan="2"><p class="login-form-error-msg-sc"><%= login_msg %></p></td>
+                <td class="login-form-table-msg-sc" colspan="2"><div id="login-error-msg" class="login-form-error-msg-sc"><%= login_msg %></div></td>
             </tr>
             <tr>
-                <td colspan="2">
-                    <input class="login-form-table-button-sc" type="submit" value="Login">
+                <td colspan="2">                    
+                    <input class="login-form-table-button-sc" type="button" onclick="loginValidate(this);" value="Login"> <!-- ne type="submit" legyen, mert akkor elküldi szerver oldalra is a form-ot -->
                 </td>
             </tr>
         </table>
     </form>
-        
-    <center><%= program_title_and_version %></center>    
+    
+    <center><%= program_title_and_version %></center>
 
 </body>
 </html>

@@ -4,6 +4,23 @@ function testConsoleLog() {
     console.log('Meghivva a klien js függvény!');
 }
 
+//form elküldése javascript-ből: a document.getElementById -t kell alkalmazni
+//https://www.formget.com/javascript-submit-form/
+function loginValidate(formElement) {        
+    var form = document.getElementById("login-form");
+    if (form !== null) {
+        var loginemail = form[0].value;
+        var loginpassword = form[1].value;
+        if (loginemail === "" || loginpassword === "") {
+            document.getElementById("login-error-msg").innerHTML = "A felhasználó név, vagy jelszó hiányzik!";
+        } else {
+            form.action = window.location.href + 'login';
+            form.submit();
+        }
+    }
+    return false;
+}
+
 //https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 function useradminFormValidate(formElement) {
 
@@ -11,9 +28,8 @@ function useradminFormValidate(formElement) {
     var url = window.location.href;    
     var form = $(formElement);
     if (form !== undefined) {
-                            
+                                
     }
-
     //form.action = window.location.href + '/saveUserForm';
     //form.submit();
 

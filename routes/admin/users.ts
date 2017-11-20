@@ -1,15 +1,24 @@
 ﻿import express = require('express');
+import session = require('express-session');
+import cookieParser = require('cookie-parser');
 import async = require('async');
+import bodyParser = require('body-parser');
 const adminUserPage = express.Router();
-var parser = require('body-parser');
 
 var app = express();
-var bodyParser = require('body-parser');
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
+
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
-
 
 import * as constans from '../../helpers/Constains';
 import * as templateJSONRenderCtrl from '../../helpers/TemplateRenderControl';
@@ -25,7 +34,7 @@ var mongoDbCtrl = new mongoDbControl.MongoDBControl();
 var testText: string;
 
 adminUserPage.post('/saveUserForm', function (req, res) {
-
+    
     var savedUser = new _user.User(req.body.useremail, req.body.userpassword, null);        
 
     if (savedUser.email === "" || typeof savedUser.email == 'undefined' || savedUser.password === "" || typeof savedUser.password == 'undefined') {
@@ -55,6 +64,7 @@ adminUserPage.post('/saveUserForm', function (req, res) {
                 //NOP...
         });        
     }
+
     res.redirect('/useradmin');
 });
 
@@ -71,6 +81,7 @@ adminUserPage.post('/ajaxUpdateTest', function (req, res) {
 });
 
 adminUserPage.get('/', (req: express.Request, res: express.Response) => {    
+
     async.series(
         [            
             callback => mongoDbCtrl.getAllUserRole(callback),

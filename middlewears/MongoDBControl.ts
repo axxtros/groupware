@@ -30,6 +30,7 @@ export class MongoDBControl {
     private mongoDBUrl: string;
     private db: any;    
 
+    private _isCheckedLoginUser: boolean;
     private _registratedUserList: Array<User>;
     private _userRoles: Array<UserRole>;
     private _selectedUserRoleId: any;
@@ -42,6 +43,32 @@ export class MongoDBControl {
         //var o_id = new ObjectID();
         //console.log(o_id);
     }  
+
+    /**
+     * Leellenőrzi, hogy az adatbázisban létezik-e a bejelentkezés sorána megadott adatokkal.
+     * @param email
+     * @param password
+     * @param callback
+     */
+    public checkLoginUser(_email: string, _password: string, callback) {
+        var thisObject = this;
+        thisObject.db.open(function (err) {
+            if (err) throw err;
+
+            var collection = thisObject.db.collection(DB_USER_COLLECTION);
+            collection.find({ email: _email, password: _password }).toArray(function (err, resultList) {
+                if (err) throw err;
+
+                if (resultList.length > 0) {
+                    thisObject._isCheckedLoginUser = true;
+                } else {
+                    thisObject._isCheckedLoginUser = false;
+                }                
+                thisObject.db.close();
+                callback();
+            });
+        });
+    }
 
     /**
      * Új felhasználó felvétele.
@@ -136,7 +163,7 @@ export class MongoDBControl {
             }
         }
         callback();
-    }    
+    }
     
     /**
      * Lekérdezi az összes tárolt felhasználói szerepkört.
@@ -158,7 +185,7 @@ export class MongoDBControl {
                 callback();
             });
         });
-    }    
+    }
 
     /**
      * Ellenörzi, hogy a felhasználó email/password páros alapján a felhasználó bejelentkezhet-e.
@@ -186,6 +213,14 @@ export class MongoDBControl {
     }
 
     //getters/setters ---------------------------------------------------------
+    public get isCheckedLoginUser(): boolean {
+        return this._isCheckedLoginUser;
+    }
+
+    public set isCheckedLoginUser(isCheckedLoginUser: boolean) {
+        this._isCheckedLoginUser = isCheckedLoginUser;
+    }
+
     public get registratedUserList(): Array<User> {
         return this._registratedUserList;
     }
