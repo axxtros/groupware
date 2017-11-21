@@ -106,7 +106,7 @@ adminUserPage.get('/', (req, res) => {
 
             res.render('pages/admin/users.ejs', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
 
-    });    
-}); 
+    });
+});
 
 export default adminUserPage;
