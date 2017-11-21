@@ -1,33 +1,19 @@
 ﻿var express = require('express');
 var session = require('express-session');
 import async = require('async');
-//import cookieParser = require('cookie-parser');
-//import bodyParser = require('body-parser');
 
 const adminUserPage = express.Router();
 
 var app = express();
 
-//app.set('trust proxy', 1) // trust first proxy
-//app.use(session({
-//    secret: 'keyboard cat',
-//    resave: false,
-//    saveUninitialized: true,
-//    cookie: { secure: true }
-//}));
-
-//app.use(bodyParser.json());         // to support JSON-encoded bodies
-//app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-//    extended: true
-//}));
-
 import * as constans from '../../helpers/Constains';
 import * as templateJSONRenderCtrl from '../../helpers/TemplateRenderControl';
 import * as mongoDbControl from '../../middlewears/MongoDBControl';
 import * as _user from "../../models/User";
+import * as _userrole from "../../models/Userrole";
 
 type User = _user.User;
-type UserRole = _user.Userrole;
+type UserRole = _userrole.Userrole;
 
 var sess;
 var userSaveMsg: string = "";
@@ -83,16 +69,32 @@ adminUserPage.post('/ajaxUpdateTest', function (req, res) {
 });
 
 //adminUserPage.get('/', (req: express.Request, res: express.Response) => {    
-adminUserPage.get('/', (req, res) => {    
+adminUserPage.get('/', (req, res) => {
 
     sess = req.session;
-    console.log('uname:' + sess.uname);
+    //console.log('userID: ' + sess.userID);
 
-    async.series(
+    //async teljes leírás
+    //https://caolan.github.io/async/docs.html#series
+
+    //ES6 technikák
+    //https://medium.com/mofed/es6-series-async-javascript-790ba11a47e5
+
+    var text: string;
+
+    async.series(            
         [            
             callback => mongoDbCtrl.getAllUserRole(callback),
-            callback => mongoDbCtrl.getAllRegistratedUser(callback)
-        ], function () {            
+            callback => mongoDbCtrl.getAllRegistratedUser(callback),
+            callback => mongoDbCtrl.getLoginUserSessionDatas(sess.userID, callback)
+        ], function (results) {
+            
+            var loginUser = new _user.User();
+            loginUser = results;
+
+            console.log(loginUser.email);
+            console.log(loginUser.role.role);
+
             var webPageJSONElements = {
                 create_new_user_form_title: 'Administration - Users',
                 user_save_msg: userSaveMsg,

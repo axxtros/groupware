@@ -1,32 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Userrole = (function () {
-    function Userrole(value) {
-        this._value = value;
-    }
-    Object.defineProperty(Userrole.prototype, "role", {
-        get: function () {
-            return this._role;
-        },
-        set: function (role) {
-            this._role = role;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Userrole.prototype, "value", {
-        get: function () {
-            return this._value;
-        },
-        set: function (value) {
-            this._value = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Userrole;
-}());
-exports.Userrole = Userrole;
 var User = (function () {
     function User(email, password, role) {
         this._email = email || '';

@@ -15,6 +15,9 @@ var app = express();
 
 //session-based authentication example
 //https://www.codementor.io/emjay/how-to-build-a-simple-session-based-authentication-system-with-nodejs-from-scratch-6vn67mcy3
+//session tutorials
+//https://github.com/expressjs/session#readme
+//https://www.tutorialspoint.com/expressjs/expressjs_sessions.htm
 
 //session beállítások
 //app.use(session({ secret: 'ssshhhhh' }));     //deprecated

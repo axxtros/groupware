@@ -17,9 +17,10 @@ import async = require('async');
 
 import * as constains from "../helpers/Constains";
 import * as user from "../models/User";
+import * as userrole from "../models/Userrole";
 
 type User = user.User;
-type UserRole = user.Userrole;
+type UserRole = userrole.Userrole;
 
 const DB_USER_COLLECTION: string = "dat_user";
 const DB_USERROLE_COLLECTION: string = "prd_userrole";
@@ -45,7 +46,7 @@ export class MongoDBControl {
     }  
 
     /**
-     * Leellenőrzi, hogy az adatbázisban létezik-e a bejelentkezés sorána megadott adatokkal.
+     * Leellenőrzi, hogy az adatbázisban létezik-e a user, a bejelentkezés során a megadott adatokkal.
      * @param email
      * @param password
      * @param callback
@@ -65,8 +66,7 @@ export class MongoDBControl {
                     thisObject._isCheckedLoginUser = false;
                 }                
                 thisObject.db.close();
-
-                callback();
+                callback(resultList[0]._id);
             });
         });
     }
@@ -189,15 +189,6 @@ export class MongoDBControl {
     }
 
     /**
-     * Ellenörzi, hogy a felhasználó email/password páros alapján a felhasználó bejelentkezhet-e.
-     * @param userEmail
-     * @param userPassword
-     */
-    public checkUserLogin(userEmail: string, userPassword: string) {
-
-    }
-
-    /**
      * Menti a belépések naplózását időbélyeggel.
      * @param _useremail
      * @param _password
@@ -210,6 +201,49 @@ export class MongoDBControl {
                 if (err) throw err;
             });
             db.close();
+        });
+    }
+
+    /**
+     * Visszakeres egy adott felhasználót az _id-ja alapján.
+     * @param userID
+     * @param callback
+     */
+    public getLoginUserSessionDatas(userID: any, callback) {
+        var resultUser = new user.User();
+        async.series(
+            [
+                callback => this.getLoginUser(userID, callback),                
+            ], function (returnCallback) {
+                callback(returnCallback);
+        });        
+    }
+
+    private getLoginUser(userID, callback) {
+        var thisObject = this;
+        var resultUser = new user.User();
+        thisObject.db.open(function (err) {
+            //1. felhasználó lekérdezése
+            var collection = thisObject.db.collection(DB_USER_COLLECTION);
+            var uid = ObjectID(userID);
+
+            collection.findOne({ "_id": uid }, function (err, userResult) {            
+                if (err) throw err;
+                resultUser = userResult;
+
+                //2. felhasználó role lekérdezése
+                var resultRole = new userrole.Userrole();
+                var collection = thisObject.db.collection(DB_USERROLE_COLLECTION);
+                var rid = ObjectID(resultUser.role_id);
+                collection.findOne({ "_id": rid }, function (err, roleResult) {                
+                    if (err) throw err;
+
+                    resultUser.role = roleResult;
+
+                    thisObject.db.close();
+                    callback(resultUser);
+                });
+            });
         });
     }
 

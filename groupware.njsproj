@@ -90,6 +90,9 @@
     <TypeScriptCompile Include="models\User.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="models\Userrole.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="routes\admin\users.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

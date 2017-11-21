@@ -273,3 +273,5 @@ helpers/Constains.js
 middlewears/MongoDBControl.js
 routes/admin/users.js
 helpers/TemplateRenderControl.js
+models/Userrole.js
+models/User.js
