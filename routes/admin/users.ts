@@ -1,24 +1,25 @@
-﻿import express = require('express');
-import session = require('express-session');
-import cookieParser = require('cookie-parser');
+﻿var express = require('express');
+var session = require('express-session');
 import async = require('async');
-import bodyParser = require('body-parser');
+//import cookieParser = require('cookie-parser');
+//import bodyParser = require('body-parser');
+
 const adminUserPage = express.Router();
 
 var app = express();
 
-app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-}));
+//app.set('trust proxy', 1) // trust first proxy
+//app.use(session({
+//    secret: 'keyboard cat',
+//    resave: false,
+//    saveUninitialized: true,
+//    cookie: { secure: true }
+//}));
 
-app.use(bodyParser.json());         // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-    extended: true
-}));
+//app.use(bodyParser.json());         // to support JSON-encoded bodies
+//app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+//    extended: true
+//}));
 
 import * as constans from '../../helpers/Constains';
 import * as templateJSONRenderCtrl from '../../helpers/TemplateRenderControl';
@@ -28,6 +29,7 @@ import * as _user from "../../models/User";
 type User = _user.User;
 type UserRole = _user.Userrole;
 
+var sess;
 var userSaveMsg: string = "";
 var mongoDbCtrl = new mongoDbControl.MongoDBControl();
 
@@ -71,16 +73,20 @@ adminUserPage.post('/saveUserForm', function (req, res) {
 //TESZT: rész oldal refresh ajax-al, működik (Ne töröld ki!)
 //https://stackoverflow.com/questions/43523576/update-part-of-html-page-using-node-js-and-ejs
 adminUserPage.post('/ajaxUpdateTest', function (req, res) {    
-
+    
     var tsID = req.body;
-    console.log("stsID " + tsID.str);
+    console.log("stsID " + tsID.str);    
 
     res.json({
         testText: 'Fel lett ajaxozva, ez a szerver oldalról jön!'
     });
 });
 
-adminUserPage.get('/', (req: express.Request, res: express.Response) => {    
+//adminUserPage.get('/', (req: express.Request, res: express.Response) => {    
+adminUserPage.get('/', (req, res) => {    
+
+    sess = req.session;
+    console.log('uname:' + sess.uname);
 
     async.series(
         [            

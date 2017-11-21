@@ -1,26 +1,35 @@
 ﻿'use strict';
-import express = require('express');
+var express = require('express');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+
+import mongodb = require('mongodb');
 import debug = require('debug');
 import path = require('path');
-import mongodb = require('mongodb');
-var parser = require('body-parser');
-var session = require('express-session');
 
 import routes from './routes/index';
 import useradmin from './routes/admin/users';
 
-//var adminPage = require('./routes/admin');
-
 var app = express();
-app.use(parser.urlencoded({ extended: false }));
-app.use(parser.json());
 
-app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-    secret: 'keyboard cat',
+//session-based authentication example
+//https://www.codementor.io/emjay/how-to-build-a-simple-session-based-authentication-system-with-nodejs-from-scratch-6vn67mcy3
+
+//session beállítások
+//app.use(session({ secret: 'ssshhhhh' }));     //deprecated
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({                               //így kell a session konfigurációt elvégezni, ez már így nem deprecated, segítség az egyes opciókhoz: https://www.npmjs.com/package/express-session
+    key: 'user_sid',
+    secret: 'ssshhhhh',
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
 }));
 
 // view engine setup

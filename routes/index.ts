@@ -1,6 +1,6 @@
 ﻿'use strict';
-import express = require('express');
-var cookieParser = require('cookie-parser');
+var express = require('express');
+//var cookieParser = require('cookie-parser');
 var session = require('express-session');
 import async = require('async');
 const router = express.Router();
@@ -14,15 +14,16 @@ var app = express();
 //session oldalak
 //https://github.com/expressjs/session#readme
 //https://www.tutorialspoint.com/expressjs/expressjs_sessions.htm
-app.set('trust proxy', 1) // trust first proxy
-app.use(cookieParser());
-app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-}));
+//app.set('trust proxy', 1) // trust first proxy
+//app.use(cookieParser());
+//app.use(session({
+//    secret: 'keyboard cat',
+//    resave: false,
+//    saveUninitialized: true,
+//    cookie: { secure: false }
+//}));
 
+var sess;
 var loginMsg: string;
 
 router.post('/login', function (req, res) {
@@ -30,7 +31,10 @@ router.post('/login', function (req, res) {
         email: req.body.loginemail,
         password: req.body.loginpassword
     }
-    
+
+    sess = req.session;    
+    sess.uname = 'Gáborka AA';
+
     //ellenörizzük, hogy létezik-e az adatbázisban az adott felhasználó
     var mongoDbCtrl = new mongoDbControl.MongoDBControl();
     async.series(
@@ -39,7 +43,7 @@ router.post('/login', function (req, res) {
         ], function () {
             if (mongoDbCtrl.isCheckedLoginUser) {
                 mongoDbCtrl.saveLogin(loginuser.email, loginuser.password);
-                loginMsg = "";                
+                loginMsg = "";                                
                 res.redirect('/useradmin');
             } else {
                 loginMsg = constans.Constains.LOGIN_ERROR_1;
@@ -58,14 +62,12 @@ router.post('/login', function (req, res) {
     //}
 });
 
-router.get('/', (req: express.Request, res: express.Response) => {
-
-    req.session.uname = 'Gábor';
-
+//router.get('/', (req: express.Request, res: express.Response) => {
+router.get('/', (req, res) => {        
 
     var webPageJSONElements = {
         login_msg: loginMsg,
-        uname: req.session.uname
+        uname: 'Csubi'
     };    
 
     res.render('index', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
