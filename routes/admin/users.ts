@@ -75,8 +75,8 @@ adminUserPage.post('/saveUserForm', function (req, res) {
 adminUserPage.post('/ajaxUpdateTest', function (req, res) {    
     
     var tsID = req.body;
-    console.log("stsID " + tsID.str);    
-
+    console.log("stsID " + tsID.str); 
+    
     res.json({
         testText: 'Fel lett ajaxozva, ez a szerver oldalról jön!'
     });

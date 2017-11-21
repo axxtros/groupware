@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({                               //így kell a session konfigurációt elvégezni, ez már így nem deprecated, segítség az egyes opciókhoz: https://www.npmjs.com/package/express-session
-    key: 'user_sid',
+    key: 'groupware_sid',
     secret: 'ssshhhhh',
     resave: false,
     saveUninitialized: false,

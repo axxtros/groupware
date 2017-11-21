@@ -66,8 +66,7 @@ router.post('/login', function (req, res) {
 router.get('/', (req, res) => {        
 
     var webPageJSONElements = {
-        login_msg: loginMsg,
-        uname: 'Csubi'
+        login_msg: loginMsg        
     };    
 
     res.render('index', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
