@@ -1,21 +1,35 @@
 ﻿/* 27/10/2017 */
 
+var loginForm;
+var loginEmailInput;
+
+function initIndexPage() {    
+    loginForm = document.getElementById("login-form");
+    loginEmailInput = loginForm[0];
+    loginEmailInput.focus();
+}
+
 function testConsoleLog() {
-    console.log('Meghivva a klien js függvény!');
+    console.log('Meghivva a kliens js függvény!');
+}
+
+function loginPasswordInputKeyEvent(event) {
+    if (event.keyCode == 13) {
+        loginValidate();
+    }
 }
 
 //form elküldése javascript-ből: a document.getElementById -t kell alkalmazni
 //https://www.formget.com/javascript-submit-form/
-function loginValidate(formElement) {        
-    var form = document.getElementById("login-form");
-    if (form !== null) {
-        var loginemail = form[0].value;
-        var loginpassword = form[1].value;
+function loginValidate() {
+    if (loginForm !== null) {
+        var loginemail = loginForm[0].value;
+        var loginpassword = loginForm[1].value;
         if (loginemail === "" || loginpassword === "") {
             document.getElementById("login-error-msg").innerHTML = "A felhasználó név, vagy jelszó hiányzik!";
         } else {
-            form.action = window.location.href + 'login';
-            form.submit();
+            loginForm.action = window.location.href + 'login';
+            loginForm.submit();
         }
     }
     return false;
@@ -36,9 +50,9 @@ function useradminFormValidate(formElement) {
     return false;
 }
 
-//ajax example
+//ajax example 1
 //https://stackoverflow.com/questions/43523576/update-part-of-html-page-using-node-js-and-ejs
-//ajax példa
+//ajax example 2
 //https://stackoverflow.com/questions/41665948/passing-variable-from-jquery-ajax-to-nodejs
 function ajaxUpdateTest(element) {
     var tsId = "Ez a kliens oldalról jön!";

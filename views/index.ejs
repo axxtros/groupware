@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/login.css">    
     <title><%= title %></title>
 </head>
-<body>
+<body onload="initIndexPage();">
 
     <form id="login-form" name="loginform" method="POST"> <!-- onsubmit="loginValidate(this);" --> <!-- action="/login" -->
         <table class="login-form-table-base" border="0">
@@ -18,18 +18,18 @@
             </tr>
             <tr>
                 <td class="login-form-table-title-sc">E-mail:</td>
-                <td><input class="login-form-input-sc" name="loginemail" type="text" maxlength="30" /></td>
+                <td><input class="login-form-input-sc" name="loginemail" type="text" maxlength="30" onkeypress="loginPasswordInputKeyEvent(event);" /></td>
             </tr>
             <tr>
                 <td class="login-form-table-title-sc">Password:</td>
-                <td><input class="login-form-input-sc" name="loginpassword" type="password" maxlength="30" /></td>
+                <td><input class="login-form-input-sc" name="loginpassword" type="password" maxlength="30" onkeypress="loginPasswordInputKeyEvent(event);" /></td>
             </tr>
             <tr>
                 <td class="login-form-table-msg-sc" colspan="2"><div id="login-error-msg" class="login-form-error-msg-sc"><%= login_msg %></div></td>
             </tr>
             <tr>
                 <td colspan="2">                    
-                    <input class="login-form-table-button-sc" type="button" onclick="loginValidate(this);" value="Login"> <!-- ne type="submit" legyen, mert akkor elküldi szerver oldalra is a form-ot -->
+                    <input class="login-form-table-button-sc" type="button" onclick="loginValidate();" value="Login"> <!-- ne type="submit" legyen, mert akkor elküldi szerver oldalra is a form-ot -->
                 </td>
             </tr>
         </table>
