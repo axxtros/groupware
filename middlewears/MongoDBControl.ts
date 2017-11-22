@@ -35,6 +35,8 @@ export class MongoDBControl {
     private _registratedUserList: Array<User>;
     private _userRoles: Array<UserRole>;
     private _selectedUserRoleId: any;
+    
+    public loginUser: user.User;                    //a bejelentkezett felhasználó
 
     constructor() {
         this.mongoDBUrl = constains.Constains.MONGOD_DB_URL;
@@ -240,8 +242,9 @@ export class MongoDBControl {
 
                     resultUser.role = roleResult;
 
-                    thisObject.db.close();
-                    callback(resultUser);
+                    thisObject.db.close();                    
+                    thisObject.loginUser = resultUser;
+                    callback();
                 });
             });
         });
@@ -287,15 +290,18 @@ export class MongoDBControl {
 
 }
 
-//Ezeket a script-eket kell megfutatni a mongoDB-be, első indítás elött.
-
+//Ezeket a script-eket kell megfutatni a mongoDB-be, első indítás elött, üers adatbázisra.
 /*
+
+admin_role_id = ObjectId();
 
 db.prd_userrole.insertMany( [
     { role: "Guest", value: 1 },
     { role: "Developer", value: 2 },
     { role: "Leader", value: 3 },
-    { role: "Superuser", value: 4 }
+    { _id: admin_role_id, role: "Superuser", value: 4 }
 ] );
+
+db.dat_user.insert( { email: "admin", password: "admin", role_id: admin_role_id } );
 
 */

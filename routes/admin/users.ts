@@ -79,21 +79,18 @@ adminUserPage.get('/', (req, res) => {
 
     //ES6 technikák
     //https://medium.com/mofed/es6-series-async-javascript-790ba11a47e5
-
-    var text: string;
-
-    async.series(            
-        [            
+   
+    async.series(
+        [                        
             callback => mongoDbCtrl.getAllUserRole(callback),
             callback => mongoDbCtrl.getAllRegistratedUser(callback),
             callback => mongoDbCtrl.getLoginUserSessionDatas(sess.userID, callback)
-        ], function (results) {
+        ], function () {
             
-            var loginUser = new _user.User();
-            loginUser = results;
-
-            console.log(loginUser.email);
-            console.log(loginUser.role.role);
+            //var loginUser = new _user.User();
+            //loginUser = mongoDbCtrl.loginUser;
+            //console.log(loginUser.email);
+            //console.log(loginUser.role);
 
             var webPageJSONElements = {
                 create_new_user_form_title: 'Administration - Users',
@@ -104,9 +101,10 @@ adminUserPage.get('/', (req, res) => {
                 uname: req.session.uname
             };
 
-            res.render('pages/admin/users.ejs', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
+            res.render('pages/admin/users.ejs', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements, mongoDbCtrl.loginUser));
 
     });
+
 });
 
 export default adminUserPage;

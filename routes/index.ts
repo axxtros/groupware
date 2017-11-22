@@ -57,7 +57,7 @@ router.get('/', (req, res) => {
         login_msg: loginMsg        
     };    
 
-    res.render('index', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements));
+    res.render('index', templateJSONRenderCtrl.TemplateRenderControl.ADD_TEMPLATE_JSON_PARTS(webPageJSONElements, null));
 
     //res.render('index', {
     //    title: constans.Constains.PROGRAM_TITLE,

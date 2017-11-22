@@ -1,5 +1,6 @@
 ﻿
 import * as constains from '../helpers/Constains';
+import * as user from '../models/User';
 
 export class TemplateRenderControl {
 
@@ -17,10 +18,17 @@ export class TemplateRenderControl {
     }
 
     //hozzáadja az adott oldalról bejövő JSON elemekhez a template oldalak JSON elemeit
-    static ADD_TEMPLATE_JSON_PARTS(webPageJSON: object): object {
+    static ADD_TEMPLATE_JSON_PARTS(webPageJSON: object, loginUser?: user.User): object {        
+
+        //static parts
         for (var item in this.webPageTemplateJSON) {
             webPageJSON[item] = this.webPageTemplateJSON[item];            
         }
+
+        //loginuser parts        
+        webPageJSON['login_user_email'] = loginUser != null ? loginUser.email : "";
+        webPageJSON['login_user_role'] = loginUser != null ? loginUser.role.role : "";                
+
         return webPageJSON;
     }
 
