@@ -62,13 +62,14 @@ export class MongoDBControl {
             collection.find({ email: _email, password: _password }).toArray(function (err, resultList) {
                 if (err) throw err;
 
+                thisObject.db.close();
                 if (resultList.length > 0) {
                     thisObject._isCheckedLoginUser = true;
+                    callback(resultList[0]._id);
                 } else {
                     thisObject._isCheckedLoginUser = false;
-                }                
-                thisObject.db.close();
-                callback(resultList[0]._id);
+                    callback();
+                }                                                
             });
         });
     }

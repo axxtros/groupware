@@ -46,7 +46,6 @@ function useradminFormValidate(formElement) {
     }
     //form.action = window.location.href + '/saveUserForm';
     //form.submit();
-
     return false;
 }
 
