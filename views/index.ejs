@@ -11,29 +11,43 @@
 </head>
 <body onload="initIndexPage();">
 
-    <form id="login-form" name="loginform" method="POST"> <!-- onsubmit="loginValidate(this);" --> <!-- action="/login" -->
+    <div>
+        <ul>
+            <li><a href="/?clang=hu">Magyar</a></li>
+            <li><a href="/?clang=en">English</a></li>
+        </ul>
+        <!--<ul>
+            <li><a class="<%=(lang==" hu"?"active":"")%>" href="/?clang=hu">Magyar</a></li>
+            <li><a class="<%=(lang==" en"?"active":"")%>" href="/?clang=en">English</a></li>
+        </ul>-->
+    </div>
+
+    <p><%= translation.WELCOME_MSG %></p>
+
+    <form id="login-form" name="loginform" method="POST">
+        <!-- onsubmit="loginValidate(this);" --> <!-- action="/login" -->
         <table class="login-form-table-base" border="0">
             <tr>
                 <td class="login-form-table-logo-sc" colspan="2"></td>
             </tr>
             <tr>
-                <td class="login-form-table-title-sc">E-mail:</td>
+                <td class="login-form-table-title-sc"><%= translation.EMAIL %>:</td>
                 <td><input class="login-form-input-sc" name="loginemail" type="text" maxlength="30" onkeypress="loginPasswordInputKeyEvent(event);" /></td>
             </tr>
             <tr>
-                <td class="login-form-table-title-sc">Password:</td>
+                <td class="login-form-table-title-sc"><%= translation.PASSWORD %>:</td>
                 <td><input class="login-form-input-sc" name="loginpassword" type="password" maxlength="30" onkeypress="loginPasswordInputKeyEvent(event);" /></td>
             </tr>
             <tr>
                 <td class="login-form-table-msg-sc" colspan="2"><div id="login-error-msg" class="login-form-error-msg-sc"><%= login_msg %></div></td>
             </tr>
             <tr>
-                <td colspan="2">                    
-                    <input class="login-form-table-button-sc" type="button" onclick="loginValidate();" value="Login"> <!-- ne type="submit" legyen, mert akkor elküldi szerver oldalra is a form-ot -->
+                <td colspan="2">
+                    <input class="login-form-table-button-sc" type="button" onclick="loginValidate();" value="<%= translation.LOGIN %>"> <!-- ne type="submit" legyen, mert akkor elküldi szerver oldalra is a form-ot -->
                 </td>
             </tr>
         </table>
-    </form>       
+    </form>
 
     <center><%= program_title_and_version %></center>
 

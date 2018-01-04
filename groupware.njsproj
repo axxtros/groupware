@@ -52,6 +52,12 @@
     <Content Include="htmltemplates\templates\forms\template_1_3.png" />
     <Content Include="htmltemplates\templates\forms\template_2_1.png" />
     <Content Include="htmltemplates\images\groupware_logo.png" />
+    <Content Include="i18n\en.json">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="i18n\hu.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="public\images\groupware_logo.png" />
     <Content Include="public\images\user.jpg" />
     <Content Include="public\stylesheets\login.css" />
@@ -112,6 +118,7 @@
     <Folder Include="helpers\" />
     <Folder Include="models\" />
     <Folder Include="middlewears\" />
+    <Folder Include="i18n\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />

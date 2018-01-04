@@ -3,6 +3,7 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var i18n = require("i18n-express");
 
 import mongodb = require('mongodb');
 import debug = require('debug');
@@ -33,6 +34,17 @@ app.use(session({                               //így kell a session konfigurá
     cookie: {
         expires: 600000
     }
+}));
+
+
+//i18n tutorial
+////https://www.npmjs.com/package/i18n-express
+
+//i18n beállítások
+app.use(i18n({
+    translationsPath: path.join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
+    siteLangs: ["en", "hu"],
+    textsVarName: 'translation'
 }));
 
 // view engine setup
