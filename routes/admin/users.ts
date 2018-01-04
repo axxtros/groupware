@@ -22,7 +22,6 @@ var mongoDbCtrl = new mongoDbControl.MongoDBControl();
 var testText: string;
 
 adminUserPage.post('/saveUserForm', function (req, res) {
-    
     var savedUser = new _user.User(req.body.useremail, req.body.userpassword, null);        
 
     if (savedUser.email === "" || typeof savedUser.email == 'undefined' || savedUser.password === "" || typeof savedUser.password == 'undefined') {
