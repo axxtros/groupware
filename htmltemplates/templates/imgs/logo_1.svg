@@ -25,7 +25,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.2344289"
+     inkscape:zoom="1.7457461"
      inkscape:cx="259.03952"
      inkscape:cy="468.48785"
      inkscape:document-units="px"
@@ -61,13 +61,13 @@
      id="layer2"
      inkscape:label="1. réteg 1">
     <g
-       id="g4166"
-       transform="translate(56.706387,-31.593558)"
-       inkscape:export-xdpi="83.330002"
-       inkscape:export-ydpi="83.330002">
+       id="g4159"
+       inkscape:export-filename="C:\dev\html5_dev\ww\public\images\webword_logo.png"
+       inkscape:export-xdpi="83"
+       inkscape:export-ydpi="83">
       <rect
-         y="474.50507"
-         x="102.14285"
+         y="442.9115"
+         x="158.84924"
          height="100"
          width="270"
          id="rect4161"
@@ -75,25 +75,25 @@
       <text
          sodipodi:linespacing="125%"
          id="text4152"
-         y="537.50177"
-         x="115.50085"
-         style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         y="508.77231"
+         x="179.6539"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           y="537.50177"
-           x="115.50085"
-           id="tspan4154"
-           sodipodi:role="line">group</tspan></text>
+           y="508.77231"
+           x="179.6539"
+           id="tspan4155"
+           sodipodi:role="line">web</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text4156"
-         y="537.15729"
-         x="230.75793"
+         y="508.4278"
+         x="262.26022"
          style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold Italic';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
-           y="537.15729"
-           x="230.75793"
-           id="tspan4158"
-           sodipodi:role="line">WARE</tspan></text>
+           y="508.4278"
+           x="262.26022"
+           id="tspan4157"
+           sodipodi:role="line">WORD</tspan></text>
     </g>
   </g>
   <g
